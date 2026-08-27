@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Nemblo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Hind+Siliguri:wght@400;500;600;700&family=Cinzel:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  :root{
+    --maroon-950:#340a0e;
+    --maroon-900:#4a1015;
+    --maroon-800:#5e161c;
+    --maroon-700:#742029;
+    --gold:#c9a13a;
+    --gold-light:#e7cd82;
+    --gold-deep:#8a6a1f;
+    --ivory:#f7f0df;
+    --ivory-2:#f7f0df;
+    --terracotta:#a85328;
+    --line: rgba(247,240,223,0.16);
+    --line-gold: rgba(201,161,58,0.4);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,161,58,0.10), transparent 60%),
+      var(--maroon-950);
+    color:var(--ivory-2);
+    font-family:'Hind Siliguri', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    letter-spacing:0.005em;
+    line-height:1.08;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Cinzel', serif; font-weight:600; font-size:0.7rem; text-transform:uppercase;
+    letter-spacing:0.18em; color:var(--gold-light);
+  }
+  .eyebrow::before, .eyebrow::after{content:''; width:20px; height:1px; background:var(--line-gold);}
+  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em; }
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;}
+  section{position:relative;}
+  ::selection{background:var(--gold); color:var(--maroon-950);}
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--gold); outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- ORNAMENT: alpona divider ---------- */
+  .alpona-divider{
+    height:26px; width:100%;
+    background-image: radial-gradient(circle, var(--line-gold) 1.4px, transparent 1.6px);
+    background-size: 28px 26px;
+    background-position: center;
+    opacity:0.55;
+    position:relative;
+  }
+  .alpona-divider::before{
+    content:''; position:absolute; inset:12px 0; border-top:1px solid var(--line-gold); border-bottom:1px solid var(--line-gold);
+  }
+
+  /* ---------- CREST ---------- */
+  .crest{
+    width:40px; height:40px; border-radius:50%;
+    border:1.5px solid var(--gold); display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif; font-weight:700; font-size:1.3rem; color:var(--gold-light);
+    position:relative; flex-shrink:0;
+  }
+  .crest::before{
+    content:''; position:absolute; inset:-6px; border:1px solid var(--line-gold); border-radius:50%;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px;
+    font-family:'Cormorant Garamond', serif; font-weight:600; font-size:1.5rem; color:var(--ivory-2);
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(52,10,14,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+    max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;
+  }
+  .navlinks{display:flex; gap:34px; font-size:0.95rem; font-weight:500;}
+  .navlinks a{opacity:0.82; transition:opacity 0.2s;}
+  .navlinks a:hover{opacity:1; color:var(--gold-light);}
+  @media (max-width:820px){ .navlinks{display:none;} }
+
+  .btn-gold{
+    background:linear-gradient(180deg, var(--gold-light), var(--gold));
+    color:var(--maroon-950); padding:13px 26px; border-radius:4px;
+    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:none; cursor:pointer;
+    box-shadow:0 8px 22px rgba(201,161,58,0.28);
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    display:inline-block;
+  }
+  .btn-gold:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(201,161,58,0.4);}
+  .btn-outline{
+    background:transparent; color:var(--ivory-2); padding:13px 26px; border-radius:4px;
+    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:1px solid var(--line-gold); cursor:pointer;
+    transition:border-color 0.2s ease, background 0.2s ease;
+    display:inline-block;
+  }
+  .btn-outline:hover{border-color:var(--gold); background:rgba(201,161,58,0.08);}
+
+  footer{border-top:1px solid var(--line); padding-top:44px; padding-bottom:28px;}
+  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:28px;}
+  .foot-links{display:flex; gap:26px; font-size:0.88rem; color:rgba(247,240,223,0.6); flex-wrap:wrap;}
+  .foot-links a:hover{color:var(--gold-light);}
+  .foot-bottom{font-size:0.78rem; color:rgba(247,240,223,0.4); font-family:'IBM Plex Mono';}
+</style>
+</head><body>
+<style>
+  .dash-shell{display:grid; grid-template-columns:230px 1fr; min-height:calc(100vh - 0px);}
+  @media (max-width:860px){ .dash-shell{grid-template-columns:1fr;} .dash-sidebar{display:none;} }
+
+  .dash-sidebar{
+    background:var(--maroon-900); border-right:1px solid var(--line-gold);
+    padding:28px 20px; display:flex; flex-direction:column; gap:4px;
+  }
+  .dash-sidebar .brand{margin-bottom:36px; padding-left:6px;}
+  .dash-nav a{
+    display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:2px;
+    font-size:0.92rem; color:rgba(247,240,223,0.68); font-weight:500;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .dash-nav a:hover{background:rgba(201,161,58,0.08); color:var(--ivory-2);}
+  .dash-nav a.active{background:rgba(201,161,58,0.12); color:var(--gold-light); border-left:2px solid var(--gold);}
+  .dash-sidebar .logout{margin-top:auto; padding-top:20px; border-top:1px solid var(--line);}
+
+  .dash-main{padding:32px 40px; max-width:1040px;}
+  @media (max-width:640px){ .dash-main{padding:24px 20px;} }
+
+  .dash-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; flex-wrap:wrap; gap:16px;}
+  .dash-greet .eyebrow{margin-bottom:10px;}
+  .dash-greet h1{font-size:2rem; color:var(--ivory-2);}
+  .dash-user{display:flex; align-items:center; gap:12px;}
+  .dash-user .avatar{
+    width:42px; height:42px; border-radius:50%; border:1.5px solid var(--gold);
+    background:linear-gradient(160deg, var(--gold-light), var(--terracotta));
+    display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond'; font-weight:700; color:var(--maroon-950);
+  }
+  .dash-user .name{font-size:0.9rem; color:var(--ivory-2); font-weight:600;}
+  .dash-user .loc{font-size:0.76rem; color:rgba(247,240,223,0.5);}
+
+  .filter-row{display:flex; gap:10px; flex-wrap:wrap; margin:28px 0 30px;}
+  .chip{
+    padding:9px 18px; border:1px solid var(--line-gold); border-radius:100px; font-size:0.85rem;
+    color:rgba(247,240,223,0.72); cursor:pointer; transition:all 0.2s ease; background:transparent;
+  }
+  .chip.active{background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--maroon-950); border-color:var(--gold); font-weight:600;}
+
+  .buddy-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:900px){ .buddy-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){ .buddy-grid{grid-template-columns:1fr;} }
+
+  .buddy-card{
+    background:var(--maroon-900); border:1px solid var(--line-gold); overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .buddy-photo{
+    height:150px; display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond'; font-size:2.4rem; font-weight:700; color:rgba(52,10,14,0.6);
+  }
+  .buddy-body{padding:18px 18px 20px;}
+  .buddy-body .bname{font-family:'Cormorant Garamond'; font-size:1.25rem; color:var(--ivory-2); margin-bottom:2px;}
+  .buddy-body .btag{font-size:0.76rem; color:var(--gold-light); font-family:'Cinzel'; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:10px; display:block;}
+  .buddy-meta{display:flex; justify-content:space-between; align-items:center; font-size:0.82rem; color:rgba(247,240,223,0.6); margin-bottom:16px;}
+  .buddy-meta .rate{color:var(--ivory-2); font-family:'IBM Plex Mono'; font-weight:600;}
+  .buddy-request{
+    display:block; text-align:center; padding:10px; border:1px solid var(--line-gold); border-radius:2px;
+    font-size:0.85rem; font-weight:600; color:var(--ivory-2); transition:all 0.2s ease;
+  }
+  .buddy-request:hover{border-color:var(--gold); background:rgba(201,161,58,0.08);}
+</style>
+
+<div class="dash-shell">
+  <aside class="dash-sidebar">
+    <a href="index.html" class="brand" style="font-size:1.25rem;"><div class="crest" style="width:32px;height:32px;font-size:1.05rem;">ন</div>Nemblo</a>
+    <nav class="dash-nav">
+      <a href="#" class="active">🏠 Discover</a>
+      <a href="#">💬 Messages</a>
+      <a href="#">📅 Bookings</a>
+      <a href="#">⭐ My Ratings</a>
+      <a href="#">👤 Profile</a>
+    </nav>
+    <div class="logout">
+      <a href="index.html">↩ Log out</a>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-top">
+      <div class="dash-greet">
+        <div class="eyebrow">Kolkata</div>
+        <h1>Welcome back, Ananya</h1>
+      </div>
+      <div class="dash-user">
+        <div>
+          <div class="name" style="text-align:right;">Ananya Sen</div>
+          <div class="loc">Ballygunge, Kolkata</div>
+        </div>
+        <div class="avatar">A</div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <button class="chip active">All</button>
+      <button class="chip">Gym Buddy</button>
+      <button class="chip">Travel Buddy</button>
+      <button class="chip">Adda / Coffee</button>
+      <button class="chip">Event Buddy</button>
+      <button class="chip">Study Buddy</button>
+    </div>
+
+    <div class="buddy-grid">
+      <div class="buddy-card">
+        <div class="buddy-photo" style="background:linear-gradient(155deg, var(--gold-light), var(--terracotta));">R</div>
+        <div class="buddy-body">
+          <span class="btag">Gym Buddy</span>
+          <div class="bname">Riya Chatterjee</div>
+          <div class="buddy-meta"><span>★ 4.9 · Salt Lake</span><span class="rate">₹250/hr</span></div>
+          <a href="#" class="buddy-request">Request</a>
+        </div>
+      </div>
+      <div class="buddy-card">
+        <div class="buddy-photo" style="background:linear-gradient(155deg, #e7cd82, #5e161c);">S</div>
+        <div class="buddy-body">
+          <span class="btag">Travel Buddy</span>
+          <div class="bname">Sourav Dutta</div>
+          <div class="buddy-meta"><span>★ 4.8 · Howrah</span><span class="rate">₹400/hr</span></div>
+          <a href="#" class="buddy-request">Request</a>
+        </div>
+      </div>
+      <div class="buddy-card">
+        <div class="buddy-photo" style="background:linear-gradient(155deg, #c9a13a, #34120e);">D</div>
+        <div class="buddy-body">
+          <span class="btag">Adda / Coffee</span>
+          <div class="bname">Debjit Roy</div>
+          <div class="buddy-meta"><span>★ 4.7 · Park Street</span><span class="rate">₹180/hr</span></div>
+          <a href="#" class="buddy-request">Request</a>
+        </div>
+      </div>
+      <div class="buddy-card">
+        <div class="buddy-photo" style="background:linear-gradient(155deg, #e7cd82, #742029);">P</div>
+        <div class="buddy-body">
+          <span class="btag">Event Buddy</span>
+          <div class="bname">Piyali Ghosh</div>
+          <div class="buddy-meta"><span>★ 5.0 · New Town</span><span class="rate">₹350/hr</span></div>
+          <a href="#" class="buddy-request">Request</a>
+        </div>
+      </div>
+      <div class="buddy-card">
+        <div class="buddy-photo" style="background:linear-gradient(155deg, #a85328, #e7cd82);">A</div>
+        <div class="buddy-body">
+          <span class="btag">Study Buddy</span>
+          <div class="bname">Arka Banerjee</div>
+          <div class="buddy-meta"><span>★ 4.6 · Jadavpur</span><span class="rate">₹150/hr</span></div>
+          <a href="#" class="buddy-request">Request</a>
+        </div>
+      </div>
+      <div class="buddy-card">
+        <div class="buddy-photo" style="background:linear-gradient(155deg, #8a6a1f, #f7f0df);">M</div>
+        <div class="buddy-body">
+          <span class="btag">Gym Buddy</span>
+          <div class="bname">Mousumi Sarkar</div>
+          <div class="buddy-meta"><span>★ 4.9 · Behala</span><span class="rate">₹220/hr</span></div>
+          <a href="#" class="buddy-request">Request</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    tg.setHeaderColor("#340a0e");
+    tg.setBackgroundColor("#340a0e");
+  }
+</script>
+</body></html>
