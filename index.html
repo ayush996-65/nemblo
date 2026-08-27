@@ -1,1 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nemblo — A companion worthy of your company</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Hind+Siliguri:wght@400;500;600;700&family=Cinzel:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  :root{
+    --maroon-950:#340a0e;
+    --maroon-900:#4a1015;
+    --maroon-800:#5e161c;
+    --maroon-700:#742029;
+    --gold:#c9a13a;
+    --gold-light:#e7cd82;
+    --gold-deep:#8a6a1f;
+    --ivory:#f7f0df;
+    --ivory-2:#f7f0df;
+    --terracotta:#a85328;
+    --line: rgba(247,240,223,0.16);
+    --line-gold: rgba(201,161,58,0.4);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,161,58,0.10), transparent 60%),
+      var(--maroon-950);
+    color:var(--ivory-2);
+    font-family:'Hind Siliguri', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    letter-spacing:0.005em;
+    line-height:1.08;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Cinzel', serif; font-weight:600; font-size:0.7rem; text-transform:uppercase;
+    letter-spacing:0.18em; color:var(--gold-light);
+  }
+  .eyebrow::before, .eyebrow::after{content:''; width:20px; height:1px; background:var(--line-gold);}
+  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em; }
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;}
+  section{position:relative;}
+  ::selection{background:var(--gold); color:var(--maroon-950);}
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--gold); outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- ORNAMENT: alpona divider ---------- */
+  .alpona-divider{
+    height:26px; width:100%;
+    background-image: radial-gradient(circle, var(--line-gold) 1.4px, transparent 1.6px);
+    background-size: 28px 26px;
+    background-position: center;
+    opacity:0.55;
+    position:relative;
+  }
+  .alpona-divider::before{
+    content:''; position:absolute; inset:12px 0; border-top:1px solid var(--line-gold); border-bottom:1px solid var(--line-gold);
+  }
+
+  /* ---------- CREST ---------- */
+  .crest{
+    width:40px; height:40px; border-radius:50%;
+    border:1.5px solid var(--gold); display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif; font-weight:700; font-size:1.3rem; color:var(--gold-light);
+    position:relative; flex-shrink:0;
+  }
+  .crest::before{
+    content:''; position:absolute; inset:-6px; border:1px solid var(--line-gold); border-radius:50%;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px;
+    font-family:'Cormorant Garamond', serif; font-weight:600; font-size:1.5rem; color:var(--ivory-2);
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(52,10,14,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+    max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;
+  }
+  .navlinks{display:flex; gap:34px; font-size:0.95rem; font-weight:500;}
+  .navlinks a{opacity:0.82; transition:opacity 0.2s;}
+  .navlinks a:hover{opacity:1; color:var(--gold-light);}
+  @media (max-width:820px){ .navlinks{display:none;} }
+
+  .btn-gold{
+    background:linear-gradient(180deg, var(--gold-light), var(--gold));
+    color:var(--maroon-950); padding:13px 26px; border-radius:4px;
+    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:none; cursor:pointer;
+    box-shadow:0 8px 22px rgba(201,161,58,0.28);
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    display:inline-block;
+  }
+  .btn-gold:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(201,161,58,0.4);}
+  .btn-outline{
+    background:transparent; color:var(--ivory-2); padding:13px 26px; border-radius:4px;
+    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:1px solid var(--line-gold); cursor:pointer;
+    transition:border-color 0.2s ease, background 0.2s ease;
+    display:inline-block;
+  }
+  .btn-outline:hover{border-color:var(--gold); background:rgba(201,161,58,0.08);}
+
+  footer{border-top:1px solid var(--line); padding-top:44px; padding-bottom:28px;}
+  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:28px;}
+  .foot-links{display:flex; gap:26px; font-size:0.88rem; color:rgba(247,240,223,0.6); flex-wrap:wrap;}
+  .foot-links a:hover{color:var(--gold-light);}
+  .foot-bottom{font-size:0.78rem; color:rgba(247,240,223,0.4); font-family:'IBM Plex Mono';}
+</style>
+</head><body>
+<style>
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-top:88px; padding-bottom:70px;
+    text-align:center;
+  }
+  .hero-crest-row{display:flex; justify-content:center; margin-bottom:22px;}
+  .hero .eyebrow{margin-bottom:24px;}
+  .hero h1{
+    font-size:clamp(2.6rem, 5.4vw, 4.4rem);
+    color:var(--ivory-2);
+    margin-bottom:10px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--gold-light); }
+  .hero .bangla-line{
+    font-family:'Hind Siliguri', sans-serif; font-size:1.15rem; color:var(--gold-light);
+    margin-bottom:22px; letter-spacing:0.01em;
+  }
+  .hero p.lede{
+    font-size:1.08rem; color:rgba(247,240,223,0.75); max-width:560px; margin:0 auto 36px;
+  }
+  .hero-ctas{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:50px;}
+  .hero-stats{
+    display:flex; gap:0; justify-content:center; font-family:'IBM Plex Mono';
+    border-top:1px solid var(--line-gold); border-bottom:1px solid var(--line-gold);
+    max-width:640px; margin:0 auto; padding:22px 0;
+  }
+  .hero-stats div{flex:1; border-left:1px solid var(--line);}
+  .hero-stats div:first-child{border-left:none;}
+  .hero-stats div strong{display:block; font-size:1.4rem; color:var(--gold-light);}
+  .hero-stats div span{font-size:0.7rem; color:rgba(247,240,223,0.55); text-transform:uppercase; letter-spacing:0.06em; font-family:'Hind Siliguri';}
+
+  /* ---------- SECTION HEAD ---------- */
+  .section-head{max-width:600px; margin:0 auto 50px; text-align:center;}
+  .section-head h2{font-size:clamp(1.9rem,3.2vw,2.5rem); color:var(--ivory-2); margin-top:16px;}
+  .section-head p{color:rgba(247,240,223,0.68); margin-top:14px; font-size:1.02rem;}
+
+  /* ---------- STEPS ---------- */
+  .steps{padding-top:90px; padding-bottom:30px;}
+  .step-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
+  @media (max-width:860px){ .step-grid{grid-template-columns:1fr;} }
+  .step-card{background:var(--maroon-950); padding:36px 30px;}
+  .step-card .num{font-family:'Cormorant Garamond'; font-style:italic; color:var(--gold); font-size:1.6rem; display:block; margin-bottom:14px;}
+  .step-card h3{font-size:1.35rem; color:var(--ivory-2); margin-bottom:10px;}
+  .step-card p{color:rgba(247,240,223,0.62); font-size:0.94rem;}
+
+  /* ---------- TRACKS ---------- */
+  .tracks{padding-top:70px; padding-bottom:90px;}
+  .track-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
+  @media (max-width:860px){ .track-grid{grid-template-columns:1fr;} }
+  .track{background:var(--maroon-900); padding:44px 38px; position:relative;}
+  .track .tag{font-family:'Cinzel'; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--gold);}
+  .track h3{font-size:1.7rem; color:var(--ivory-2); margin:14px 0 12px;}
+  .track p{color:rgba(247,240,223,0.68); margin-bottom:24px;}
+  .track ul{list-style:none; margin-bottom:28px;}
+  .track li{padding:10px 0; border-top:1px solid var(--line); color:rgba(247,240,223,0.78); font-size:0.94rem; display:flex; gap:10px;}
+  .track li::before{content:'—'; color:var(--gold); flex-shrink:0;}
+
+  /* ---------- PRICING ---------- */
+  .pricing{padding-top:70px; padding-bottom:100px;}
+  .price-note{
+    display:flex; align-items:center; gap:14px; margin:0 auto 44px; max-width:620px;
+    background:rgba(201,161,58,0.07); border:1px solid var(--line-gold);
+    padding:16px 22px; border-radius:2px;
+  }
+  .price-note .dot{width:8px; height:8px; border-radius:50%; background:var(--gold); flex-shrink:0;}
+  .price-note p{font-size:0.9rem; color:rgba(247,240,223,0.85);}
+  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media (max-width:900px){ .price-grid{grid-template-columns:1fr;} }
+  .plan{
+    background:var(--maroon-900); border:1px solid var(--line-gold); padding:38px 32px;
+    display:flex; flex-direction:column; position:relative;
+  }
+  .plan.featured{
+    border-color:var(--gold); background:linear-gradient(165deg, var(--maroon-800), var(--maroon-900));
+    transform:translateY(-10px);
+    box-shadow:0 24px 50px rgba(0,0,0,0.4);
+  }
+  .plan-badge{
+    position:absolute; top:-13px; left:32px;
+    font-family:'Cinzel'; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.1em;
+    background:var(--gold); color:var(--maroon-950); padding:5px 14px; border-radius:2px;
+  }
+  .plan-name{font-family:'Cormorant Garamond'; font-size:1.5rem; color:var(--ivory-2); margin-bottom:8px;}
+  .plan-price{display:flex; align-items:baseline; gap:6px; margin-bottom:4px;}
+  .plan-price .num{font-family:'Cormorant Garamond'; font-size:2.7rem; color:var(--gold-light); font-weight:600;}
+  .plan-price .per{color:rgba(247,240,223,0.55); font-size:0.88rem;}
+  .plan-sub{color:rgba(247,240,223,0.5); font-size:0.85rem; margin-bottom:26px;}
+  .plan ul{list-style:none; margin-bottom:30px; flex-grow:1;}
+  .plan li{padding:8px 0; font-size:0.92rem; color:rgba(247,240,223,0.8); display:flex; gap:10px;}
+  .plan li::before{content:'✦'; color:var(--gold); font-weight:700; flex-shrink:0; font-size:0.75rem;}
+  .plan-cta{
+    text-align:center; padding:13px; border-radius:2px; font-weight:600; font-size:0.92rem;
+    background:transparent; border:1px solid var(--line-gold); transition:all 0.2s ease;
+  }
+  .plan.featured .plan-cta{background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--maroon-950); border-color:var(--gold);}
+  .plan-cta:hover{border-color:var(--gold);}
+
+  /* ---------- TRUST ---------- */
+  .trust{padding-top:20px; padding-bottom:100px;}
+  .trust-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
+  @media (max-width:860px){ .trust-grid{grid-template-columns:repeat(2,1fr);} }
+  .trust-item{padding:28px 22px; background:var(--maroon-950);}
+  .trust-item .ico{font-size:1.3rem; margin-bottom:12px; color:var(--gold);}
+  .trust-item h4{font-family:'Cormorant Garamond'; font-size:1.15rem; color:var(--ivory-2); margin-bottom:6px;}
+  .trust-item p{font-size:0.84rem; color:rgba(247,240,223,0.58);}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{padding-top:90px; padding-bottom:100px; text-align:center;}
+  .final-cta h2{font-size:clamp(2rem,4vw,3rem); color:var(--ivory-2); max-width:640px; margin:0 auto 22px;}
+  .final-cta p{color:rgba(247,240,223,0.68); max-width:500px; margin:0 auto 34px; font-size:1.02rem;}
+  .final-ctas{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+</style>
+
+<header>
+  <nav>
+    <div class="brand"><div class="crest">ন</div>Nemblo</div>
+    <div class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#trust">Safety</a>
+    </div>
+    <a href="signup.html" class="btn-gold">Get started</a>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <div class="hero-crest-row">
+    <div class="crest" style="width:56px;height:56px;font-size:1.7rem;">ন</div>
+  </div>
+  <div class="eyebrow">Now welcoming West Bengal</div>
+  <h1>A companion worthy<br>of your <em>company.</em></h1>
+  <p class="bangla-line">আপনার সঙ্গী, আপনার শর্তে</p>
+  <p class="lede">Nemblo brings you verified companions for the gym, a trip to Digha, an adda over coffee, or an evening you don't want to spend alone — with the care of an introduction, not the awkwardness of an app.</p>
+  <div class="hero-ctas">
+    <a href="signup.html" class="btn-gold">Find a buddy</a>
+    <a href="signup.html" class="btn-outline">Become a buddy</a>
+  </div>
+  <div class="hero-stats">
+    <div><strong>Kolkata</strong><span>Howrah · Durgapur · Siliguri</span></div>
+    <div><strong>3,200+</strong><span>Verified buddies</span></div>
+    <div><strong>₹99</strong><span>Starting plan</span></div>
+  </div>
+</section>
+
+<div class="alpona-divider"></div>
+
+<section class="steps wrap" id="how">
+  <div class="section-head">
+    <div class="eyebrow">How Nemblo works</div>
+    <h2>Three steps to your first buddy</h2>
+    <p>No long forms, no guesswork — tell us the occasion, and we introduce you to someone who fits.</p>
+  </div>
+  <div class="step-grid">
+    <div class="step-card">
+      <span class="num">I.</span>
+      <h3>Pick your occasion</h3>
+      <p>Gym session, a weekend at Mandarmani, exam prep, a wedding you don't want to attend solo — tell us what's on the calendar.</p>
+    </div>
+    <div class="step-card">
+      <span class="num">II.</span>
+      <h3>Browse verified buddies</h3>
+      <p>Every profile is ID-checked before it goes live. See ratings, past meetups, and availability before you commit.</p>
+    </div>
+    <div class="step-card">
+      <span class="num">III.</span>
+      <h3>Meet, rate, return</h3>
+      <p>Confirm a time, meet in a public place, and leave a rating afterward so the next person knows what to expect.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tracks wrap">
+  <div class="track-grid">
+    <div class="track">
+      <span class="tag">For seekers</span>
+      <h3>Looking for company?</h3>
+      <p>Browse buddies by occasion, city, and availability. Message first, meet when you're both ready.</p>
+      <ul>
+        <li>Unlimited browsing of verified profiles</li>
+        <li>Filter by occasion, city, and price</li>
+        <li>In-app chat before you meet</li>
+        <li>Rate and review after every meetup</li>
+      </ul>
+      <a href="signup.html" class="btn-outline">Sign up as a seeker</a>
+    </div>
+    <div class="track">
+      <span class="tag">For buddies</span>
+      <h3>Turn your time into income</h3>
+      <p>List yourself as a companion for the occasions you're genuinely good at, set your own availability, and get paid per meetup.</p>
+      <ul>
+        <li>Set your own hourly rate</li>
+        <li>Choose which occasions you offer</li>
+        <li>Accept or decline any request</li>
+        <li>Weekly payouts to your bank account</li>
+      </ul>
+      <a href="signup.html" class="btn-gold">Sign up as a buddy</a>
+    </div>
+  </div>
+</section>
+
+<div class="alpona-divider"></div>
+
+<section class="pricing wrap" id="pricing">
+  <div class="section-head">
+    <div class="eyebrow">Pricing</div>
+    <h2>One plan, three ways to pay</h2>
+    <p>Every plan unlocks the exact same features — unlimited matches, verified profiles, and in-app chat. Only the billing rhythm changes.</p>
+  </div>
+  <div class="price-note">
+    <div class="dot"></div>
+    <p>All three plans include identical access. There's no "basic" tier that holds features back.</p>
+  </div>
+  <div class="price-grid">
+    <div class="plan">
+      <div class="plan-name">Monthly</div>
+      <div class="plan-price"><span class="num mono">₹299</span><span class="per">/month</span></div>
+      <div class="plan-sub">Billed every month, cancel anytime</div>
+      <ul>
+        <li>Unlimited buddy matches</li>
+        <li>Verified profiles only</li>
+        <li>In-app chat</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="signup.html" class="plan-cta">Choose Monthly</a>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge">Most chosen</div>
+      <div class="plan-name">EMI Lite</div>
+      <div class="plan-price"><span class="num mono">₹99</span><span class="per">/month</span></div>
+      <div class="plan-sub">Same plan, split into small monthly payments</div>
+      <ul>
+        <li>Unlimited buddy matches</li>
+        <li>Verified profiles only</li>
+        <li>In-app chat</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="signup.html" class="plan-cta">Start at ₹99</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Annual</div>
+      <div class="plan-price"><span class="num mono">₹2,499</span><span class="per">/year</span></div>
+      <div class="plan-sub">Pay once, save across the year</div>
+      <ul>
+        <li>Unlimited buddy matches</li>
+        <li>Verified profiles only</li>
+        <li>In-app chat</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="signup.html" class="plan-cta">Choose Annual</a>
+    </div>
+  </div>
+</section>
+
+<section class="trust wrap" id="trust">
+  <div class="section-head">
+    <div class="eyebrow">Safety first</div>
+    <h2>Built for trust, not just matches</h2>
+  </div>
+  <div class="trust-grid">
+    <div class="trust-item"><div class="ico">🪪</div><h4>ID verification</h4><p>Every buddy submits government ID before going live on the platform.</p></div>
+    <div class="trust-item"><div class="ico">⭐</div><h4>Public ratings</h4><p>Every meetup can be rated — good and bad history stays visible.</p></div>
+    <div class="trust-item"><div class="ico">📍</div><h4>Public meetups</h4><p>We recommend and default to public locations for first meetings.</p></div>
+    <div class="trust-item"><div class="ico">🚩</div><h4>Report & block</h4><p>One-tap reporting with a real human review team behind it.</p></div>
+  </div>
+</section>
+
+<div class="alpona-divider"></div>
+
+<section class="final-cta wrap">
+  <h2>Your next buddy is one tap away.</h2>
+  <p>Join for as little as ₹99 a month and start browsing verified companions across West Bengal today.</p>
+  <div class="final-ctas">
+    <a href="signup.html" class="btn-gold">Find a buddy</a>
+    <a href="signup.html" class="btn-outline">Become a buddy</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand" style="font-size:1.25rem;"><div class="crest" style="width:32px;height:32px;font-size:1.05rem;">ন</div>Nemblo</div>
+      <div class="foot-links">
+        <a href="#">About</a>
+        <a href="#">Safety</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 Nemblo. Currently serving West Bengal.</div>
+  </div>
+</footer>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    tg.setHeaderColor("#340a0e");
+    tg.setBackgroundColor("#340a0e");
+  }
+</script>
+</body></html>
 
