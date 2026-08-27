@@ -55,33 +55,3 @@ console.log("Nemblo bot running...");
 
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
-bot.action("pricing", (ctx) => {
-  ctx.answerCbQuery();
-  ctx.reply(
-    `Nemblo plans — every plan is identical, only the billing differs:\n\n👑 EMI Lite — ₹99/month (most chosen)\n📅 Monthly — ₹299/month\n🗓 Annual — ₹2,499/year\n\n
-    
-    Markup.inlineKeyboard([[Markup.button.webApp("Choose a plan", SIGNUP_URL)]])
-  );
-});
-
-bot.command("browse", (ctx) => {
-  ctx.reply("Open the Nemblo app to browse verified buddies:",
-    Markup.inlineKeyboard([[Markup.button.webApp("🔍 Browse buddies", MINI_APP_URL)]])
-  );
-});
-
-bot.command("signup", (ctx) => {
-  ctx.reply("Create your Nemblo profile:",
-    Markup.inlineKeyboard([[Markup.button.webApp("✍️ Sign up", SIGNUP_URL)]])
-  );
-});
-
-bot.command("help", (ctx) => {
-  ctx.reply("Commands:\n/start — main menu\n/browse — browse buddies\n/signup — create an account\n/help — this message");
-});
-
-bot.launch();
-console.log("Nemblo bot running...");
-
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
