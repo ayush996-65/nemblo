@@ -8,13 +8,11 @@
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Hind+Siliguri:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap');
 
   :root {
-    --bg-dark: #1f0508;
-    --card-bg: #320a0e;
-    --gold-bright: #f0cb6f;
-    --gold-main: #d4af37;
-    --text-light: #ffffff;
-    --text-sub: #e6d5bc;
-    --line-gold: rgba(212,175,55,0.4);
+    --bg-black: #050505;
+    --card-bg: #121212;
+    --white: #ffffff;
+    --off-white: #cccccc;
+    --line: rgba(255, 255, 255, 0.2);
     
     /* Telegram Safe Area Insets */
     --tg-top: var(--tg-safe-area-inset-top, env(safe-area-inset-top, 0px));
@@ -26,8 +24,8 @@
   html, body {
     width: 100%;
     min-height: 100vh;
-    background-color: var(--bg-dark);
-    color: var(--text-light);
+    background-color: var(--bg-black);
+    color: var(--white);
     font-family: 'Hind Siliguri', sans-serif;
   }
 
@@ -45,8 +43,8 @@
 
   /* HEADER */
   header {
-    background: rgba(31, 5, 8, 0.95);
-    border-bottom: 1px solid var(--line-gold);
+    background: rgba(5, 5, 5, 0.95);
+    border-bottom: 1px solid var(--line);
     position: sticky;
     top: 0;
     z-index: 50;
@@ -62,17 +60,18 @@
   }
 
   .crest {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    border: 1.5px solid var(--gold-bright);
+    border: 1.5px solid var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
     font-size: 1.2rem;
-    color: var(--gold-bright);
+    color: var(--white);
+    background: var(--bg-black);
   }
 
   .brand {
@@ -82,17 +81,17 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
     font-size: 1.5rem;
-    color: var(--gold-bright);
+    color: var(--white);
   }
 
   .btn-outline {
     background: transparent;
-    color: var(--gold-bright);
+    color: var(--white);
     padding: 6px 14px;
     border-radius: 4px;
     font-weight: 600;
     font-size: 0.85rem;
-    border: 1px solid var(--gold-bright);
+    border: 1px solid var(--white);
   }
 
   /* HERO */
@@ -102,32 +101,35 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 32px 0;
+    padding: 24px 0 32px 0;
   }
 
   .hero h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem;
-    line-height: 1.2;
-    color: var(--gold-bright);
-    margin-bottom: 12px;
+    font-size: 2.5rem;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 10px;
   }
 
   .hero p {
-    font-size: 1rem;
-    color: var(--text-sub);
-    margin-bottom: 24px;
+    font-size: 0.95rem;
+    color: var(--off-white);
+    margin-bottom: 28px;
   }
 
-  /* FEATURES */
+  /* OVERLAPPING FEATURE CARD EFFECT */
   .feature-box {
     background: var(--card-bg);
-    border: 1px solid var(--line-gold);
+    border: 1px solid var(--line);
     border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 28px;
+    padding: 24px 20px 20px 20px;
+    margin-bottom: -15px; /* Creates overlap with button below */
     width: 100%;
     text-align: left;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8);
   }
 
   .feature-item {
@@ -135,18 +137,18 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 12px;
-    font-size: 0.95rem;
-    color: var(--text-light);
+    font-size: 0.92rem;
+    color: var(--white);
   }
 
   .feature-item:last-child { margin-bottom: 0; }
-  .feature-item strong { color: var(--gold-bright); }
+  .feature-item strong { color: var(--white); text-decoration: underline; }
 
-  /* BUTTON */
-  .btn-gold {
-    background: linear-gradient(180deg, var(--gold-bright), var(--gold-main));
-    color: #000000;
-    padding: 14px 0;
+  /* OVERLAPPING BUTTON */
+  .btn-white {
+    background: var(--white);
+    color: var(--bg-black);
+    padding: 16px 0;
     border-radius: 6px;
     font-weight: 700;
     font-size: 1.05rem;
@@ -154,19 +156,21 @@
     display: block;
     width: 100%;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+    position: relative;
+    z-index: 20; /* Sits on top of the feature box */
+    box-shadow: 0 4px 20px rgba(255,255,255,0.25);
   }
 
   /* FOOTER */
   footer {
-    border-top: 1px solid var(--line-gold);
+    border-top: 1px solid var(--line);
     padding: 16px 0;
     margin-top: auto;
   }
 
   .foot-bottom {
     font-size: 0.75rem;
-    color: var(--text-sub);
+    color: var(--off-white);
     font-family: 'IBM Plex Mono', monospace;
     text-align: center;
   }
@@ -194,7 +198,7 @@
     <div class="feature-item">🛡️ <span>Safe <strong>2-step OTP</strong> verified sessions</span></div>
   </div>
 
-  <a href="signup.html" class="btn-gold">Get Started</a>
+  <a href="signup.html" class="btn-white">Get Started</a>
 </main>
 
 <footer>
@@ -209,8 +213,8 @@
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
-    tg.setHeaderColor("#1f0508");
-    tg.setBackgroundColor("#1f0508");
+    tg.setHeaderColor("#050505");
+    tg.setBackgroundColor("#050505");
   }
 </script>
 </body>
