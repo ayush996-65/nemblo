@@ -52,24 +52,8 @@
   section{position:relative;}
   ::selection{background:var(--gold); color:var(--maroon-950);}
 
-  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
     outline:2px solid var(--gold); outline-offset:3px;
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
-  }
-
-  /* ---------- ORNAMENT: alpona divider ---------- */
-  .alpona-divider{
-    height:26px; width:100%;
-    background-image: radial-gradient(circle, var(--line-gold) 1.4px, transparent 1.6px);
-    background-size: 28px 26px;
-    background-position: center;
-    opacity:0.55;
-    position:relative;
-  }
-  .alpona-divider::before{
-    content:''; position:absolute; inset:12px 0; border-top:1px solid var(--line-gold); border-bottom:1px solid var(--line-gold);
   }
 
   /* ---------- CREST ---------- */
@@ -86,6 +70,272 @@
     display:flex; align-items:center; gap:12px;
     font-family:'Cormorant Garamond', serif; font-weight:600; font-size:1.5rem; color:var(--ivory-2);
     letter-spacing:0.02em;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(52,10,14,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+    max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;
+  }
+  .navlinks{display:flex; gap:34px; font-size:0.95rem; font-weight:500;}
+  .navlinks a{opacity:0.82; transition:opacity 0.2s;}
+  .navlinks a:hover{opacity:1; color:var(--gold-light);}
+  @media (max-width:820px){ .navlinks{display:none;} }
+
+  .btn-gold{
+    background:linear-gradient(180deg, var(--gold-light), var(--gold));
+    color:var(--maroon-950); padding:13px 26px; border-radius:4px;
+    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:none; cursor:pointer;
+    box-shadow:0 8px 22px rgba(201,161,58,0.28);
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    display:inline-block; text-align:center; width:100%;
+  }
+  .btn-gold:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(201,161,58,0.4);}
+  .btn-outline{
+    background:transparent; color:var(--ivory-2); padding:13px 26px; border-radius:4px;
+    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:1px solid var(--line-gold); cursor:pointer;
+    transition:border-color 0.2s ease, background 0.2s ease;
+    display:inline-block;
+  }
+  .btn-outline:hover{border-color:var(--gold); background:rgba(201,161,58,0.08);}
+
+  /* ---------- AUTH CARD ---------- */
+  .auth-wrap{
+    min-height:calc(100vh - 73px);
+    display:flex; align-items:center; justify-content:center;
+    padding-top:60px; padding-bottom:60px;
+  }
+  .auth-card{
+    width:100%; max-width:460px;
+    background:var(--maroon-900); border:1px solid var(--line-gold);
+    padding:44px 40px;
+    position:relative;
+  }
+  .auth-card::before{
+    content:''; position:absolute; inset:8px; border:1px solid rgba(201,161,58,0.22); pointer-events:none;
+  }
+  .auth-head{text-align:center; margin-bottom:34px;}
+  .auth-head .crest{margin:0 auto 18px;}
+  .auth-head h1{font-size:1.9rem; color:var(--ivory-2); margin-bottom:8px;}
+  .auth-head p{color:rgba(247,240,223,0.6); font-size:0.92rem;}
+
+  .role-toggle{
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--line-gold); border:1px solid var(--line-gold);
+    margin-bottom:28px;
+  }
+  .role-toggle label{
+    background:var(--maroon-950); padding:14px 10px; text-align:center;
+    font-size:0.88rem; font-weight:600; cursor:pointer; color:rgba(247,240,223,0.6);
+    transition:all 0.2s ease; user-select:none;
+  }
+  .role-toggle input{position:absolute; opacity:0; pointer-events:none;}
+  .role-toggle input:checked + label{
+    background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--maroon-950);
+  }
+
+  .field{margin-bottom:20px;}
+  .field label{
+    display:block; font-size:0.8rem; color:var(--gold-light); margin-bottom:8px;
+    letter-spacing:0.02em; font-weight:600;
+  }
+  .field input, .field select, .field textarea{
+    width:100%; background:var(--maroon-950); border:1px solid var(--line-gold);
+    color:var(--ivory-2); padding:13px 14px; font-size:0.95rem; font-family:'Hind Siliguri';
+    border-radius:2px;
+  }
+  .field input::placeholder, .field textarea::placeholder{color:rgba(247,240,223,0.35);}
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--gold);}
+  .field select{ 
+    appearance:none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c9a13a'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; background-size:16px;
+  }
+
+  .hidden{display:none;}
+
+  .auth-note{
+    text-align:center; margin-top:22px; font-size:0.85rem; color:rgba(247,240,223,0.55);
+  }
+  .auth-note a{color:var(--gold-light); font-weight:600;}
+
+  .trust-strip{
+    display:flex; align-items:center; gap:10px; justify-content:center;
+    margin-top:26px; padding-top:22px; border-top:1px solid var(--line);
+    font-size:0.78rem; color:rgba(247,240,223,0.5);
+  }
+
+  footer{border-top:1px solid var(--line); padding-top:44px; padding-bottom:28px;}
+  .foot-bottom{font-size:0.78rem; color:rgba(247,240,223,0.4); font-family:'IBM Plex Mono'; text-align:center;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand"><div class="crest">ন</div>Nemblo</a>
+    <div class="navlinks">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#trust">Safety</a>
+    </div>
+    <a href="dashboard.html" class="btn-outline">Log in</a>
+  </nav>
+</header>
+
+<div class="auth-wrap wrap">
+  <div class="auth-card">
+    <div class="auth-head">
+      <div class="crest" style="width:48px;height:48px;font-size:1.4rem;">ন</div>
+      <h1>Join Nemblo</h1>
+      <p>Companionship, done properly — across West Bengal.</p>
+    </div>
+
+    <div class="role-toggle">
+      <input type="radio" name="role" id="role-seeker" value="seeker" checked>
+      <label for="role-seeker">I'm a Seeker</label>
+      <input type="radio" name="role" id="role-buddy" value="buddy">
+      <label for="role-buddy">I'm a Buddy</label>
+    </div>
+
+    <form id="signupForm">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" placeholder="Ananya Sen" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="phone">Mobile number</label>
+        <input type="tel" id="phone" name="phone" placeholder="+91 98XXX XXXXX" autocomplete="tel" required>
+      </div>
+      <div class="field">
+        <label for="city">City</label>
+        <select id="city" name="city" required>
+          <option value="Kolkata">Kolkata</option>
+          <option value="Howrah">Howrah</option>
+          <option value="Durgapur">Durgapur</option>
+          <option value="Siliguri">Siliguri</option>
+          <option value="Asansol">Asansol</option>
+          <option value="Kharagpur">Kharagpur</option>
+          <option value="Bardhaman">Bardhaman</option>
+          <option value="Other">Other West Bengal city</option>
+        </select>
+      </div>
+
+      <!-- Buddy Specific Fields -->
+      <div id="buddyFields" class="hidden">
+        <div class="field">
+          <label for="rate">Desired Hourly Rate (₹)</label>
+          <input type="number" id="rate" name="rate" placeholder="e.g. 500" min="100">
+        </div>
+        <div class="field">
+          <label for="bio">Short bio / Interests</label>
+          <textarea id="bio" name="bio" rows="3" placeholder="Tell seekers what occasions you're great for (e.g. Gym, Travel, Events)..."></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" required minlength="6">
+      </div>
+
+      <button type="submit" class="btn-gold" id="createAccountBtn">Continue to Payment</button>
+    </form>
+
+    <div class="auth-note">Already on Nemblo? <a href="dashboard.html">Log in</a></div>
+
+    <div class="trust-strip">
+      <span>🪪</span> ID verification required before your profile goes live
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">© 2026 Nemblo. Currently serving West Bengal.</div>
+  </div>
+</footer>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  // 1. Telegram WebApp Integration
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    tg.setHeaderColor("#340a0e");
+    tg.setBackgroundColor("#340a0e");
+  }
+
+  // 2. Dynamic UI & URL Query Parameters
+  const seekerRadio = document.getElementById("role-seeker");
+  const buddyRadio = document.getElementById("role-buddy");
+  const buddyFields = document.getElementById("buddyFields");
+  const createAccountBtn = document.getElementById("createAccountBtn");
+  const signupForm = document.getElementById("signupForm");
+
+  const urlParams = new URLSearchParams(window.location.search);
+  let plan = urlParams.get("plan") || "EMI Lite";
+  let amount = urlParams.get("amount") || "99";
+
+  function updateRoleView() {
+    if (buddyRadio.checked) {
+      buddyFields.classList.remove("hidden");
+      createAccountBtn.textContent = "Complete Buddy Profile";
+    } else {
+      buddyFields.classList.add("hidden");
+      createAccountBtn.textContent = `Continue to Payment (₹${amount})`;
+    }
+  }
+
+  seekerRadio.addEventListener("change", updateRoleView);
+  buddyRadio.addEventListener("change", updateRoleView);
+
+  // Initialize button text on load
+  updateRoleView();
+
+  // 3. Form Submission & Local Storage Data Persistence
+  signupForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const selectedRole = document.querySelector('input[name="role"]:checked').value;
+    
+    // Package real-time input data
+    const userData = {
+      name: document.getElementById("name").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      city: document.getElementById("city").value,
+      role: selectedRole,
+      password: document.getElementById("password").value,
+      plan: plan,
+      amount: amount
+    };
+
+    if (selectedRole === "buddy") {
+      userData.rate = document.getElementById("rate").value;
+      userData.bio = document.getElementById("bio").value;
+    }
+
+    // Persist session state
+    localStorage.setItem("nemblo_user", JSON.stringify(userData));
+
+    // Redirect conditionally based on user role
+    if (selectedRole === "seeker") {
+      const targetParams = new URLSearchParams({ plan, amount });
+      window.location.href = `payment.html?${targetParams.toString()}`;
+    } else {
+      window.location.href = "dashboard.html";
+    }
+  });
+</script>
+</body>
+</html>
   }
 
   /* ---------- HEADER ---------- */
