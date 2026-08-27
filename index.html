@@ -2,269 +2,268 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Nemblo — Verified Companionship</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Hind+Siliguri:wght@400;500;600;700&family=Cinzel:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap');
 
-  :root{
-    --maroon-950:#340a0e;
-    --maroon-900:#4a1015;
-    --gold:#c9a13a;
-    --gold-light:#e7cd82;
-    --ivory-2:#f7f0df;
+  :root {
+    --maroon-950: #340a0e;
+    --maroon-900: #4a1015;
+    --gold: #c9a13a;
+    --gold-light: #e7cd82;
+    --ivory-2: #f7f0df;
     --line: rgba(247,240,223,0.16);
     --line-gold: rgba(201,161,58,0.4);
+    
+    /* Telegram Native Safe Insets Fix */
+    --tg-safe-top: var(--tg-safe-area-inset-top, 0px);
+    --tg-safe-bottom: var(--tg-safe-area-inset-bottom, 0px);
   }
 
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html, body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--maroon-950);
+  }
+
+  body {
     background:
       radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,161,58,0.10), transparent 60%),
       var(--maroon-950);
-    color:var(--ivory-2);
-    font-family:'Hind Siliguri', sans-serif;
-    line-height:1.6;
-    min-height:100vh;
-  }
-  a{color:inherit; text-decoration:none;}
-  .wrap{max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;}
-
-  /* CREST & BRAND */
-  .crest{
-    width:40px; height:40px; border-radius:50%;
-    border:1.5px solid var(--gold); display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond', serif; font-weight:700; font-size:1.3rem; color:var(--gold-light);
-    position:relative; flex-shrink:0;
-  }
-  .crest::before{
-    content:''; position:absolute; inset:-6px; border:1px solid var(--line-gold); border-radius:50%;
-  }
-  .brand{
-    display:flex; align-items:center; gap:12px;
-    font-family:'Cormorant Garamond', serif; font-weight:600; font-size:1.5rem; color:var(--ivory-2);
+    color: var(--ivory-2);
+    font-family: 'Hind Siliguri', sans-serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    
+    /* Dynamic Safe Area Padding to Stop Overlapping */
+    padding-top: calc(var(--tg-safe-top) + 8px);
+    padding-bottom: calc(var(--tg-safe-bottom) + 16px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* HEADER */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(52,10,14,0.92);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding-top:16px; padding-bottom:16px;
-    max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;
-  }
-  .btn-outline{
-    background:transparent; color:var(--ivory-2); padding:9px 18px; border-radius:4px;
-    font-weight:600; font-size:0.88rem; border:1px solid var(--line-gold); cursor:pointer;
-  }
-  .btn-gold{
-    background:linear-gradient(180deg, var(--gold-light), var(--gold));
-    color:var(--maroon-950); padding:12px 28px; border-radius:4px;
-    font-weight:600; font-size:1rem; border:none; cursor:pointer;
-    display:inline-block; margin-top:20px;
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding-left: 20px; padding-right: 20px; width: 100%; }
+
+  /* HEADER & BRANDING */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(52,10,14,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
   }
 
-  /* HERO */
-  .hero{
-    padding:80px 0; text-align:center;
-  }
-  .hero h1{
-    font-family:'Cormorant Garamond', serif; font-size:3rem; color:var(--gold-light); margin-bottom:16px;
-  }
-  .hero p{
-    font-size:1.1rem; color:rgba(247,240,223,0.7); max-width:600px; margin:0 auto;
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    max-width: 1160px;
+    margin: 0 auto;
   }
 
-  footer{border-top:1px solid var(--line); padding:28px 0; margin-top:60px;}
-  .foot-bottom{font-size:0.78rem; color:rgba(247,240,223,0.4); font-family:'IBM Plex Mono'; text-align:center;}
+  .crest {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .crest::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border: 1px solid var(--line-gold);
+    border-radius: 50%;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--ivory-2);
+  }
+
+  /* BUTTONS */
+  .btn-outline {
+    background: transparent;
+    color: var(--ivory-2);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: 1px solid var(--line-gold);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    background: rgba(201,161,58,0.08);
+  }
+
+  .btn-gold {
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    color: var(--maroon-950);
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    box-shadow: 0 6px 20px rgba(201,161,58,0.25);
+    transition: transform 0.2s ease;
+  }
+
+  .btn-gold:active {
+    transform: scale(0.98);
+  }
+
+  /* HERO CONTENT */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 0;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    line-height: 1.15;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    color: rgba(247,240,223,0.75);
+    max-width: 520px;
+    margin: 0 auto 28px auto;
+  }
+
+  /* FEATURES CARD */
+  .feature-box {
+    background: var(--maroon-900);
+    border: 1px solid var(--line-gold);
+    padding: 24px;
+    margin: 20px 0 30px 0;
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    position: relative;
+  }
+
+  .feature-box::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(201,161,58,0.18);
+    pointer-events: none;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: var(--ivory-2);
+  }
+
+  .feature-item:last-child { margin-bottom: 0; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 16px 0;
+    margin-top: auto;
+  }
+
+  .foot-bottom {
+    font-size: 0.75rem;
+    color: rgba(247,240,223,0.4);
+    font-family: 'IBM Plex Mono', monospace;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
 
 <header>
   <nav>
-    <a href="index.html" class="brand"><div class="crest">ন</div>Nemblo</a>
-    <a href="signup.html" class="btn-outline">Log in</a>
+    <a href="index.html" class="brand">
+      <div class="crest">ন</div>
+      <span>Nemblo</span>
+    </a>
+    <a href="dashboard.html" class="btn-outline">Log in</a>
   </nav>
 </header>
 
 <main class="wrap hero">
-  <h1>Companionship, Done Properly</h1>
-  <p>Connecting verified companions across West Bengal for events, workout sessions, cafe adda, and safe social outings.</p>
+  <h1>Companionship,<br>Done Properly</h1>
+  <p>Connecting verified companions across West Bengal for events, gym sessions, cafe adda, and safe social outings.</p>
+
+  <div class="feature-box">
+    <div class="feature-item">🪪 <span><b>100% ID Verified</b> companions</span></div>
+    <div class="feature-item">📍 <span>Serving <b>Kolkata, Howrah, Durgapur, Siliguri</b></span></div>
+    <div class="feature-item">🛡️ <span>Safe 2-step OTP verified sessions</span></div>
+  </div>
+
   <a href="signup.html" class="btn-gold">Get Started</a>
 </main>
 
 <footer>
   <div class="wrap">
-    <div class="foot-bottom">© 2026 Nemblo. Currently serving West Bengal.</div>
+    <div class="foot-bottom">© 2026 Nemblo. Serving West Bengal.</div>
   </div>
 </footer>
 
+<!-- Telegram Web App SDK Integrations -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-  if (window.Telegram && window.Telegram.WebApp) {
-    const tg = window.Telegram.WebApp;
-    tg.ready(); tg.expand();
-    tg.setHeaderColor("#340a0e");
-    tg.setBackgroundColor("#340a0e");
-  }
+  (function initTelegramApp() {
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      tg.expand();
+      
+      // Sync dark maroon theme colors with Telegram UI
+      tg.setHeaderColor("#340a0e");
+      tg.setBackgroundColor("#340a0e");
+
+      // Auto-expand viewport fix
+      if (!tg.isExpanded) {
+        tg.expand();
+      }
+    }
+  })();
 </script>
 </body>
 </html>
-    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:none; cursor:pointer;
-    box-shadow:0 8px 22px rgba(201,161,58,0.28);
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
-    display:inline-block; text-align:center; width:100%;
-  }
-  .btn-gold:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(201,161,58,0.4);}
-  .btn-outline{
-    background:transparent; color:var(--ivory-2); padding:13px 26px; border-radius:4px;
-    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:1px solid var(--line-gold); cursor:pointer;
-    transition:border-color 0.2s ease, background 0.2s ease;
-    display:inline-block;
-  }
-  .btn-outline:hover{border-color:var(--gold); background:rgba(201,161,58,0.08);}
-
-  /* ---------- AUTH CARD ---------- */
-  .auth-wrap{
-    min-height:calc(100vh - 73px);
-    display:flex; align-items:center; justify-content:center;
-    padding-top:60px; padding-bottom:60px;
-  }
-  .auth-card{
-    width:100%; max-width:460px;
-    background:var(--maroon-900); border:1px solid var(--line-gold);
-    padding:44px 40px;
-    position:relative;
-  }
-  .auth-card::before{
-    content:''; position:absolute; inset:8px; border:1px solid rgba(201,161,58,0.22); pointer-events:none;
-  }
-  .auth-head{text-align:center; margin-bottom:34px;}
-  .auth-head .crest{margin:0 auto 18px;}
-  .auth-head h1{font-size:1.9rem; color:var(--ivory-2); margin-bottom:8px;}
-  .auth-head p{color:rgba(247,240,223,0.6); font-size:0.92rem;}
-
-  .role-toggle{
-    display:grid; grid-template-columns:1fr 1fr; gap:1px;
-    background:var(--line-gold); border:1px solid var(--line-gold);
-    margin-bottom:28px;
-  }
-  .role-toggle label{
-    background:var(--maroon-950); padding:14px 10px; text-align:center;
-    font-size:0.88rem; font-weight:600; cursor:pointer; color:rgba(247,240,223,0.6);
-    transition:all 0.2s ease; user-select:none;
-  }
-  .role-toggle input{position:absolute; opacity:0; pointer-events:none;}
-  .role-toggle input:checked + label{
-    background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--maroon-950);
-  }
-
-  .field{margin-bottom:20px;}
-  .field label{
-    display:block; font-size:0.8rem; color:var(--gold-light); margin-bottom:8px;
-    letter-spacing:0.02em; font-weight:600;
-  }
-  .field input, .field select, .field textarea{
-    width:100%; background:var(--maroon-950); border:1px solid var(--line-gold);
-    color:var(--ivory-2); padding:13px 14px; font-size:0.95rem; font-family:'Hind Siliguri';
-    border-radius:2px;
-  }
-  .field input::placeholder, .field textarea::placeholder{color:rgba(247,240,223,0.35);}
-  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--gold);}
-  .field select{ 
-    appearance:none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c9a13a'><path d='M6 9l6 6 6-6'/></svg>");
-    background-repeat:no-repeat; background-position:right 14px center; background-size:16px;
-  }
-
-  .hidden{display:none !important;}
-
-  .auth-note{
-    text-align:center; margin-top:22px; font-size:0.85rem; color:rgba(247,240,223,0.55);
-  }
-  .auth-note a{color:var(--gold-light); font-weight:600;}
-
-  .trust-strip{
-    display:flex; align-items:center; gap:10px; justify-content:center;
-    margin-top:26px; padding-top:22px; border-top:1px solid var(--line);
-    font-size:0.78rem; color:rgba(247,240,223,0.5);
-  }
-
-  /* ---------- OTP MODAL OVERLAY ---------- */
-  .modal-overlay{
-    position:fixed; inset:0; z-index:100;
-    background:rgba(20, 3, 5, 0.88);
-    backdrop-filter:blur(12px);
-    display:flex; align-items:center; justify-content:center; padding:20px;
-  }
-  .otp-card{
-    width:100%; max-width:420px;
-    background:var(--maroon-900); border:1px solid var(--line-gold);
-    padding:36px 30px; position:relative; text-align:center;
-  }
-  .otp-card::before{
-    content:''; position:absolute; inset:8px; border:1px solid rgba(201,161,58,0.22); pointer-events:none;
-  }
-  .otp-input-group{
-    display:flex; gap:10px; justify-content:center; margin:24px 0;
-  }
-  .otp-digit{
-    width:48px; height:54px; text-align:center; font-size:1.4rem; font-weight:700;
-    font-family:'IBM Plex Mono', monospace; background:var(--maroon-950);
-    border:1px solid var(--line-gold); color:var(--gold-light); border-radius:4px;
-  }
-  .otp-digit:focus{border-color:var(--gold); outline:none; box-shadow:0 0 10px rgba(201,161,58,0.3);}
-  .error-msg{
-    color:#ff6b6b; font-size:0.85rem; margin-bottom:12px; display:none;
-  }
-  .resend-btn{
-    background:none; border:none; color:var(--gold-light); font-size:0.85rem;
-    cursor:pointer; text-decoration:underline; margin-top:14px; display:inline-block;
-  }
-  .resend-btn:disabled{color:rgba(247,240,223,0.3); cursor:not-allowed; text-decoration:none;}
-
-  footer{border-top:1px solid var(--line); padding-top:44px; padding-bottom:28px;}
-  .foot-bottom{font-size:0.78rem; color:rgba(247,240,223,0.4); font-family:'IBM Plex Mono'; text-align:center;}
-</style>
-</head>
-<body>
-
-<header>
-  <nav>
-    <a href="index.html" class="brand"><div class="crest">ন</div>Nemblo</a>
-    <div class="navlinks">
-      <a href="index.html#how">How it works</a>
-      <a href="index.html#pricing">Pricing</a>
-      <a href="index.html#trust">Safety</a>
-    </div>
-    <a href="dashboard.html" class="btn-outline">Log in</a>
-  </nav>
-</header>
-
-<div class="auth-wrap wrap">
-  <div class="auth-card">
-    <div class="auth-head">
-      <div class="crest" style="width:48px;height:48px;font-size:1.4rem;">ন</div>
-      <h1>Join Nemblo</h1>
-      <p>Companionship, done properly — across West Bengal.</p>
-    </div>
-
-    <div class="role-toggle">
-      <input type="radio" name="role" id="role-seeker" value="seeker" checked>
-      <label for="role-seeker">I'm a Seeker</label>
-      <input type="radio" name="role" id="role-buddy" value="buddy">
-      <label for="role-buddy">I'm a Buddy</label>
-    </div>
-
-    <form id="signupForm">
-      <div class="field">
-        <label for="name">Full name</label>
-        <input type="text" id="name" name="name" placeholder="Ananya Sen" autocomplete="name" required>
+ete="name" required>
       </div>
       <div class="field">
         <label for="phone">Mobile number</label>
