@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment — Nemblo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Hind+Siliguri:wght@400;500;600;700&family=Cinzel:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  :root {
+    --maroon-950: #340a0e;
+    --maroon-900: #4a1015;
+    --maroon-800: #5e161c;
+    --maroon-700: #742029;
+    --gold: #c9a13a;
+    --gold-light: #e7cd82;
+    --gold-deep: #8a6a1f;
+    --ivory: #f7f0df;
+    --ivory-2: #f7f0df;
+    --terracotta: #a85328;
+    --line: rgba(247,240,223,0.16);
+    --line-gold: rgba(201,161,58,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,161,58,0.10), transparent 60%),
+      var(--maroon-950);
+    color: var(--ivory-2);
+    font-family: 'Hind Siliguri', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    line-height: 1.08;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.18em; color: var(--gold-light);
+  }
+  .eyebrow::before, .eyebrow::after { content: ''; width: 20px; height: 1px; background: var(--line-gold); }
+  .mono { font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.02em; }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; max-width: 100%; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  section { position: relative; }
+  ::selection { background: var(--gold); color: var(--maroon-950); }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--gold); outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* ---------- ORNAMENT: alpona divider ---------- */
+  .alpona-divider {
+    height: 26px; width: 100%;
+    background-image: radial-gradient(circle, var(--line-gold) 1.4px, transparent 1.6px);
+    background-size: 28px 26px;
+    background-position: center;
+    opacity: 0.55;
+    position: relative;
+  }
+  .alpona-divider::before {
+    content: ''; position: absolute; inset: 12px 0; border-top: 1px solid var(--line-gold); border-bottom: 1px solid var(--line-gold);
+  }
+
+  /* ---------- CREST ---------- */
+  .crest {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.3rem; color: var(--gold-light);
+    position: relative; flex-shrink: 0;
+  }
+  .crest::before {
+    content: ''; position: absolute; inset: -6px; border: 1px solid var(--line-gold); border-radius: 50%;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.5rem; color: var(--ivory-2);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- HEADER ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(52,10,14,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px; padding-bottom: 16px;
+    max-width: 1160px; margin: 0 auto; padding-left: 24px; padding-right: 24px;
+  }
+  .navlinks { display: flex; gap: 34px; font-size: 0.95rem; font-weight: 500; }
+  .navlinks a { opacity: 0.82; transition: opacity 0.2s; }
+  .navlinks a:hover { opacity: 1; color: var(--gold-light); }
+  @media (max-width: 820px) { .navlinks { display: none; } }
+
+  .btn-gold {
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    color: var(--maroon-950); padding: 13px 26px; border-radius: 4px;
+    font-weight: 600; font-size: 0.92rem; letter-spacing: 0.03em; border: none; cursor: pointer;
+    box-shadow: 0 8px 22px rgba(201,161,58,0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: inline-block;
+  }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(201,161,58,0.4); }
+  .btn-outline {
+    background: transparent; color: var(--ivory-2); padding: 13px 26px; border-radius: 4px;
+    font-weight: 600; font-size: 0.92rem; letter-spacing: 0.03em; border: 1px solid var(--line-gold); cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(201,161,58,0.08); }
+
+  footer { border-top: 1px solid var(--line); padding-top: 44px; padding-bottom: 28px; }
+  .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-bottom: 28px; }
+  .foot-links { display: flex; gap: 26px; font-size: 0.88rem; color: rgba(247,240,223,0.6); flex-wrap: wrap; }
+  .foot-links a:hover { color: var(--gold-light); }
+  .foot-bottom { font-size: 0.78rem; color: rgba(247,240,223,0.4); font-family: 'IBM Plex Mono', monospace; }
+
+  /* ---------- PAYMENT PAGE STYLES ---------- */
+  .pay-wrap {
+    min-height: calc(100vh - 73px);
+    display: flex; align-items: center; justify-content: center;
+    padding-top: 60px; padding-bottom: 60px;
+  }
+  .pay-card {
+    width: 100%; max-width: 460px;
+    background: var(--maroon-900); border: 1px solid var(--line-gold);
+    padding: 40px 36px; text-align: center; position: relative;
+  }
+  .pay-card::before {
+    content: ''; position: absolute; inset: 8px; border: 1px solid rgba(201,161,58,0.22); pointer-events: none;
+  }
+  .pay-head .crest { margin: 0 auto 16px; }
+  .pay-head h1 { font-size: 1.7rem; color: var(--ivory-2); margin-bottom: 6px; }
+  .pay-head p { color: rgba(247,240,223,0.6); font-size: 0.9rem; margin-bottom: 26px; }
+
+  .pay-amount {
+    font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; color: var(--gold-light); font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .pay-plan-label {
+    font-family: 'Cinzel', serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--gold); margin-bottom: 24px;
+  }
+
+  .qr-box {
+    background: var(--ivory-2); padding: 16px; display: inline-block; border-radius: 4px;
+    border: 2px solid var(--gold); margin-bottom: 18px;
+  }
+  .qr-box img { width: 220px; height: 220px; display: block; }
+
+  .upi-id {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--ivory-2);
+    background: var(--maroon-950); border: 1px solid var(--line-gold); padding: 10px 14px;
+    margin-bottom: 26px; word-break: break-all;
+  }
+  .pay-steps {
+    text-align: left; margin-bottom: 28px; font-size: 0.86rem; color: rgba(247,240,223,0.7);
+    list-style: none;
+  }
+  .pay-steps li { padding: 6px 0; display: flex; gap: 10px; }
+  .pay-steps li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+  .pay-confirm { width: 100%; text-align: center; margin-bottom: 14px; }
+  .pay-note { font-size: 0.78rem; color: rgba(247,240,223,0.45); line-height: 1.5; }
+  .txn-field { margin-bottom: 16px; text-align: left; }
+  .txn-field label {
+    display: block; font-size: 0.78rem; color: var(--gold-light); margin-bottom: 7px; font-weight: 600;
+  }
+  .txn-field input {
+    width: 100%; background: var(--maroon-950); border: 1px solid var(--line-gold);
+    color: var(--ivory-2); padding: 12px 14px; font-size: 0.92rem; font-family: 'IBM Plex Mono', monospace;
+    border-radius: 2px;
+  }
+  .txn-field input::placeholder { color: rgba(247,240,223,0.3); font-family: 'Hind Siliguri', sans-serif; }
+  .txn-field input:focus { border-color: var(--gold); }
+  .txn-error { color: var(--terracotta); font-size: 0.78rem; margin: -10px 0 14px; text-align: left; display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand"><div class="crest">ন</div>Nemblo</a>
+    <div class="navlinks">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#trust">Safety</a>
+    </div>
+    <a href="dashboard.html" class="btn-outline">Log in</a>
+  </nav>
+</header>
+
+<main class="pay-wrap wrap">
+  <div class="pay-card">
+    <div class="pay-head">
+      <div class="crest" style="width:48px;height:48px;font-size:1.4rem;">ন</div>
+      <h1>Complete your payment</h1>
+      <p>Scan with any UPI app — GPay, PhonePe, Paytm, or your bank app</p>
+    </div>
+
+    <div class="pay-amount" id="payAmount">₹99</div>
+    <div class="pay-plan-label" id="payPlanLabel">EMI Lite · Monthly</div>
+
+    <div class="qr-box">
+      <img id="qrImage" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'></svg>" alt="UPI payment QR code">
+    </div>
+
+    <div class="upi-id" id="upiIdDisplay">PASTE-YOUR-UPI-ID@bank</div>
+
+    <ul class="pay-steps">
+      <li>Open any UPI app and scan the code above</li>
+      <li>Confirm the amount shown matches your plan</li>
+      <li>Complete the payment in your UPI app</li>
+      <li>Copy the UTR / transaction ID from your UPI app</li>
+    </ul>
+
+    <div class="txn-field">
+      <label for="txnId">UPI transaction ID / UTR number</label>
+      <input type="text" id="txnId" placeholder="e.g. 402816573921">
+    </div>
+    <div class="txn-error" id="txnError">Please enter your transaction ID before confirming.</div>
+
+    <button class="btn-gold pay-confirm" id="confirmBtn">Confirm payment</button>
+
+    <div class="pay-note">We'll verify your transaction ID manually and unlock your dashboard shortly. If it takes more than a few hours, message us on Telegram with your transaction ID.</div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom" style="text-align:center;">© 2026 Nemblo. Currently serving West Bengal.</div>
+  </div>
+</footer>
+
+<script>
+  const UPI_ID = "6290533392@mbk";
+  const PAYEE_NAME = "Nemblo";
+  const ADMIN_TELEGRAM_USERNAME = "jamy321";
+
+  const params = new URLSearchParams(window.location.search);
+  const amount = params.get("amount") || "99";
+  const planLabel = params.get("plan") || "EMI Lite · Monthly";
+
+  document.getElementById("payAmount").textContent = "₹" + amount;
+  document.getElementById("payPlanLabel").textContent = planLabel;
+  document.getElementById("upiIdDisplay").textContent = UPI_ID;
+
+  const upiUri = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${encodeURIComponent(amount)}&cu=INR&tn=${encodeURIComponent("Nemblo " + planLabel)}`;
+  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(upiUri)}`;
+  document.getElementById("qrImage").src = qrApiUrl;
+
+  document.getElementById("confirmBtn").addEventListener("click", function () {
+    const txnInput = document.getElementById("txnId");
+    const errorBox = document.getElementById("txnError");
+    const txnValue = txnInput.value.trim();
+
+    if (!txnValue) {
+      errorBox.style.display = "block";
+      txnInput.focus();
+      return;
+    }
+    errorBox.style.display = "none";
+
+    const message = `Hi Nemblo, I've paid ₹${amount} for the ${planLabel} plan. My UPI transaction ID is: ${txnValue}`;
+    const telegramUrl = `https://t.me/${ADMIN_TELEGRAM_USERNAME}?text=${encodeURIComponent(message)}`;
+
+    window.open(telegramUrl, "_blank");
+    window.location.href = "dashboard.html";
+  });
+</script>
+</body>
+</html>
