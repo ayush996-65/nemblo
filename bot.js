@@ -58,7 +58,8 @@ process.once("SIGTERM", () => bot.stop("SIGTERM"));
 bot.action("pricing", (ctx) => {
   ctx.answerCbQuery();
   ctx.reply(
-    `Nemblo plans — every plan is identical, only the billing differs:\n\n👑 EMI Lite — ₹99/month (most chosen)\n📅 Monthly — ₹299/month\n🗓 Annual — ₹2,499/year\n\n🪔 Durga Puja Special — ₹1,250/day for a full-day companion, every day of the Pujo`,
+    `Nemblo plans — every plan is identical, only the billing differs:\n\n👑 EMI Lite — ₹99/month (most chosen)\n📅 Monthly — ₹299/month\n🗓 Annual — ₹2,499/year\n\n
+    
     Markup.inlineKeyboard([[Markup.button.webApp("Choose a plan", SIGNUP_URL)]])
   );
 });
