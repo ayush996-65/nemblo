@@ -1,7 +1,9 @@
 {
-  "name": "nemblo-bot",
+  "name": "nemblo",
   "version": "1.0.0",
   "main": "bot.js",
-  "scripts": { "start": "node bot.js" },
-  "dependencies": { "telegraf": "^4.16.3" }
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-telegram-bot-api": "^0.66.0"
+  }
 }
