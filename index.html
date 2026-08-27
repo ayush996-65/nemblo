@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nemblo</title>
+  <title>Nemblo - Modern Digital Experience</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* CSS Variables */
     :root {
-      --bg-dark: #1a0508;
-      --card-bg: #270a0f;
+      --bg-dark: #120305;
+      --card-bg: #1e070b;
+      --card-border: rgba(201, 161, 58, 0.25);
       --gold: #c9a13a;
       --gold-light: #f7f0df;
-      --ivory-2: #f7f0df;
       --line-gold: rgba(201, 161, 58, 0.3);
-      --line: rgba(247, 240, 223, 0.15);
+      --line: rgba(247, 240, 223, 0.12);
+      --text-muted: rgba(247, 240, 223, 0.65);
     }
 
     * {
@@ -27,31 +28,36 @@
 
     body {
       background-color: var(--bg-dark);
-      color: var(--ivory-2);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      color: var(--gold-light);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* Header */
+    /* Navbar */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 32px;
+      padding: 20px 48px;
       border-bottom: 1px solid var(--line);
+      background: rgba(18, 3, 5, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .logo-container {
+    .brand {
       display: flex;
       align-items: center;
       gap: 12px;
+      text-decoration: none;
     }
 
     .logo-icon {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       border: 1px solid var(--gold);
       display: flex;
@@ -62,46 +68,70 @@
       background: rgba(201, 161, 58, 0.1);
     }
 
-    .logo-text {
+    .brand-name {
       font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--ivory-2);
+      font-weight: 700;
+      color: var(--gold-light);
       font-family: serif;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
     }
 
     /* Buttons */
     .btn-gold {
       background: var(--gold);
-      color: #1a0508;
-      padding: 12px 24px;
+      color: var(--bg-dark);
+      padding: 10px 22px;
       border-radius: 4px;
-      border: none;
       font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(201, 161, 58, 0.28);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: inline-block;
       text-decoration: none;
+      box-shadow: 0 4px 14px rgba(201, 161, 58, 0.25);
+      transition: all 0.2s ease;
+      display: inline-block;
+      border: 1px solid var(--gold);
     }
 
     .btn-gold:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 26px rgba(201, 161, 58, 0.4);
+      box-shadow: 0 8px 20px rgba(201, 161, 58, 0.4);
     }
 
     .btn-outline {
       background: transparent;
-      color: var(--ivory-2);
-      padding: 13px 26px;
+      color: var(--gold-light);
+      padding: 10px 22px;
       border-radius: 4px;
       font-weight: 600;
-      font-size: 0.92rem;
-      letter-spacing: 0.03em;
       border: 1px solid var(--line-gold);
-      cursor: pointer;
-      transition: border-color 0.2s ease, background 0.2s ease;
-      display: inline-block;
       text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-block;
     }
 
     .btn-outline:hover {
@@ -109,33 +139,108 @@
       background: rgba(201, 161, 58, 0.08);
     }
 
-    /* Main Section */
-    main {
-      flex: 1;
-      padding: 40px 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
+    /* Hero Section */
+    .hero {
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 0 24px;
+      text-align: center;
     }
 
-    .hero-card {
-      border: 1px solid var(--line-gold);
-      border-radius: 8px;
-      padding: 60px 20px;
-      text-align: center;
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
       background: var(--card-bg);
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-ctas {
       display: flex;
       justify-content: center;
-      align-items: center;
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+
+    /* Features Grid */
+    .features {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 32px;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      color: var(--gold-light);
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--line);
-      padding-top: 44px;
-      padding-bottom: 28px;
-      padding-left: 32px;
-      padding-right: 32px;
+      padding: 48px 48px 28px;
+      margin-top: 100px;
     }
 
     .foot-grid {
@@ -143,52 +248,106 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 24px;
-      margin-bottom: 28px;
+      margin-bottom: 36px;
     }
 
     .foot-links {
       display: flex;
-      gap: 26px;
-      font-size: 0.88rem;
-      color: rgba(247, 240, 223, 0.6);
-      flex-wrap: wrap;
+      gap: 28px;
+      font-size: 0.9rem;
     }
 
     .foot-links a {
-      color: rgba(247, 240, 223, 0.6);
+      color: var(--text-muted);
       text-decoration: none;
       transition: color 0.2s ease;
     }
 
     .foot-links a:hover {
-      color: var(--gold-light);
+      color: var(--gold);
     }
 
     .foot-bottom {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: rgba(247, 240, 223, 0.4);
       font-family: 'IBM Plex Mono', monospace;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
     }
   </style>
 </head>
 <body>
 
+  <!-- Navbar -->
   <header>
-    <div class="logo-container">
+    <a href="#" class="brand">
       <div class="logo-icon">ন</div>
-      <span class="logo-text">Nemblo</span>
-    </div>
-    <a href="#" class="btn-outline">Log in</a>
+      <span class="brand-name">Nemblo</span>
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      <div class="nav-buttons">
+        <a href="login.html" class="btn-outline">Log in</a>
+        <a href="dashboard.html" class="btn-gold">Dashboard</a>
+      </div>
+    </nav>
   </header>
 
-  <main>
-    <div class="hero-card">
-      <div class="logo-icon" style="width: 60px; height: 60px; font-size: 1.8rem;">ন</div>
-    </div>
-  </main>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">✦ Experience Next-Gen Management</div>
+    <h1>Manage Your Operations with <span>Precision</span></h1>
+    <p>Nemblo provides a streamlined, dark-mode-first environment for tracking real-time analytics, processing payments, and scaling your digital workflow.</p>
 
+    <div class="hero-ctas">
+      <a href="dashboard.html" class="btn-gold">Get Started Free</a>
+      <a href="#features" class="btn-outline">Explore Features</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="section-title">
+      <h2>Built for Modern Performance</h2>
+      <p style="color: var(--text-muted);">Everything you need in one sleek interface.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Lightning Fast</h3>
+        <p>Optimized structure ensuring rapid execution speeds and minimal latency across all operations.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Secure & Isolated</h3>
+        <p>Enterprise-grade security standards with end-to-end data safety and access control.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Real-time Analytics</h3>
+        <p>Monitor your performance, metrics, and ongoing activities instantly through custom views.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
     <div class="foot-grid">
+      <div class="brand">
+        <div class="logo-icon">ন</div>
+        <span class="brand-name">Nemblo</span>
+      </div>
+
       <div class="foot-links">
         <a href="#">About Us</a>
         <a href="#">Privacy Policy</a>
@@ -196,8 +355,10 @@
         <a href="#">Contact</a>
       </div>
     </div>
+
     <div class="foot-bottom">
-      &copy; 2026 Nemblo. All rights reserved.
+      <span>&copy; 2026 Nemblo Inc. All rights reserved.</span>
+      <span>Status: Systems Operational</span>
     </div>
   </footer>
 
