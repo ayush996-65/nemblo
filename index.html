@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+<style>
+  /* ---<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Nemblo — Verified Companionship</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Hind+Siliguri:wght@400;500;600;700&family=Cinzel:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap');
@@ -16,14 +17,14 @@
     --line: rgba(247,240,223,0.16);
     --line-gold: rgba(201,161,58,0.4);
     
-    /* Telegram Native Safe Insets Fix */
-    --tg-safe-top: var(--tg-safe-area-inset-top, 0px);
-    --tg-safe-bottom: var(--tg-safe-area-inset-bottom, 0px);
+    /* Dynamic Telegram Safe Area Insets with Env Fallbacks */
+    --tg-top: var(--tg-safe-area-inset-top, env(safe-area-inset-top, 0px));
+    --tg-bottom: var(--tg-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
-  html, body {
+  html {
     width: 100%;
     height: 100%;
     background-color: var(--maroon-950);
@@ -36,12 +37,13 @@
     color: var(--ivory-2);
     font-family: 'Hind Siliguri', sans-serif;
     line-height: 1.6;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     
-    /* Dynamic Safe Area Padding to Stop Overlapping */
-    padding-top: calc(var(--tg-safe-top) + 8px);
-    padding-bottom: calc(var(--tg-safe-bottom) + 16px);
+    /* Telegram WebApp Specific Padding Fix */
+    padding-top: calc(var(--tg-top) + 12px);
+    padding-bottom: calc(var(--tg-bottom) + 20px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -57,13 +59,14 @@
     background: rgba(52,10,14,0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
+    margin-top: 4px;
   }
 
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 20px;
+    padding: 10px 20px;
     max-width: 1160px;
     margin: 0 auto;
   }
@@ -115,11 +118,6 @@
     transition: all 0.2s ease;
   }
 
-  .btn-outline:hover {
-    border-color: var(--gold);
-    background: rgba(201,161,58,0.08);
-  }
-
   .btn-gold {
     background: linear-gradient(180deg, var(--gold-light), var(--gold));
     color: var(--maroon-950);
@@ -132,11 +130,10 @@
     display: inline-block;
     box-shadow: 0 6px 20px rgba(201,161,58,0.25);
     transition: transform 0.2s ease;
+    text-align: center;
   }
 
-  .btn-gold:active {
-    transform: scale(0.98);
-  }
+  .btn-gold:active { transform: scale(0.98); }
 
   /* HERO CONTENT */
   .hero {
@@ -146,32 +143,32 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 40px 0;
+    padding: 30px 0;
   }
 
   .hero h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     line-height: 1.15;
     color: var(--gold-light);
     margin-bottom: 14px;
   }
 
   .hero p {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: rgba(247,240,223,0.75);
     max-width: 520px;
-    margin: 0 auto 28px auto;
+    margin: 0 auto 24px auto;
   }
 
-  /* FEATURES CARD */
+  /* FEATURES BOX */
   .feature-box {
     background: var(--maroon-900);
     border: 1px solid var(--line-gold);
-    padding: 24px;
-    margin: 20px 0 30px 0;
+    padding: 20px;
+    margin: 10px 0 24px 0;
     width: 100%;
-    max-width: 500px;
+    max-width: 480px;
     text-align: left;
     position: relative;
   }
@@ -188,8 +185,8 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 12px;
-    font-size: 0.9rem;
+    margin-bottom: 10px;
+    font-size: 0.88rem;
     color: var(--ivory-2);
   }
 
@@ -224,7 +221,7 @@
 
 <main class="wrap hero">
   <h1>Companionship,<br>Done Properly</h1>
-  <p>Connecting verified companions across West Bengal for events, gym sessions, cafe adda, and safe social outings.</p>
+  <p>Connecting verified companions across West Bengal for events, workout sessions, cafe adda, and safe social outings.</p>
 
   <div class="feature-box">
     <div class="feature-item">🪪 <span><b>100% ID Verified</b> companions</span></div>
@@ -232,7 +229,7 @@
     <div class="feature-item">🛡️ <span>Safe 2-step OTP verified sessions</span></div>
   </div>
 
-  <a href="signup.html" class="btn-gold">Get Started</a>
+  <a href="signup.html" class="btn-gold" style="width:100%; max-width:280px;">Get Started</a>
 </main>
 
 <footer>
@@ -241,7 +238,7 @@
   </div>
 </footer>
 
-<!-- Telegram Web App SDK Integrations -->
+<!-- Telegram SDK -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
   (function initTelegramApp() {
@@ -250,954 +247,20 @@
       tg.ready();
       tg.expand();
       
-      // Sync dark maroon theme colors with Telegram UI
+      // Sync maroon color theme with Telegram client UI
       tg.setHeaderColor("#340a0e");
       tg.setBackgroundColor("#340a0e");
 
-      // Auto-expand viewport fix
-      if (!tg.isExpanded) {
-        tg.expand();
+      // Inject custom safe-area top padding if Telegram returns dynamic header heights
+      if (tg.contentSafeAreaInset && tg.contentSafeAreaInset.top) {
+        document.body.style.paddingTop = (tg.contentSafeAreaInset.top + 10) + 'px';
       }
     }
   })();
 </script>
 </body>
 </html>
-ete="name" required>
-      </div>
-      <div class="field">
-        <label for="phone">Mobile number</label>
-        <input type="tel" id="phone" name="phone" placeholder="+91 98XXX XXXXX" autocomplete="tel" pattern="^[0-9+\s\-]{10,15}$" required>
-      </div>
-      <div class="field">
-        <label for="city">City</label>
-        <select id="city" name="city" required>
-          <option value="Kolkata">Kolkata</option>
-          <option value="Howrah">Howrah</option>
-          <option value="Durgapur">Durgapur</option>
-          <option value="Siliguri">Siliguri</option>
-          <option value="Asansol">Asansol</option>
-          <option value="Kharagpur">Kharagpur</option>
-          <option value="Bardhaman">Bardhaman</option>
-          <option value="Other">Other West Bengal city</option>
-        </select>
-      </div>
-
-      <!-- Buddy Specific Fields -->
-      <div id="buddyFields" class="hidden">
-        <div class="field">
-          <label for="rate">Desired Hourly Rate (₹)</label>
-          <input type="number" id="rate" name="rate" placeholder="e.g. 500" min="100">
-        </div>
-        <div class="field">
-          <label for="bio">Short bio / Interests</label>
-          <textarea id="bio" name="bio" rows="3" placeholder="Tell seekers what occasions you're great for..."></textarea>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" required minlength="6">
-      </div>
-
-      <button type="submit" class="btn-gold" id="createAccountBtn">Verify Mobile Number</button>
-    </form>
-
-    <div class="auth-note">Already on Nemblo? <a href="dashboard.html">Log in</a></div>
-
-    <div class="trust-strip">
-      <span>🪪</span> ID verification required before your profile goes live
-    </div>
-  </div>
 </div>
-
-<!-- OTP Verification Modal -->
-<div id="otpModal" class="modal-overlay hidden">
-  <div class="otp-card">
-    <div class="auth-head" style="margin-bottom:20px;">
-      <div class="crest" style="width:40px;height:40px;font-size:1.2rem;">🔐</div>
-      <h2 style="font-size:1.6rem; color:var(--ivory-2); margin-top:10px;">Verify Phone</h2>
-      <p>Enter the 6-digit OTP sent to <br><b id="targetPhone" style="color:var(--gold-light);"></b></p>
-    </div>
-
-    <div class="otp-input-group">
-      <input type="text" maxlength="1" class="otp-digit" pattern="\d" inputmode="numeric" required>
-      <input type="text" maxlength="1" class="otp-digit" pattern="\d" inputmode="numeric" required>
-      <input type="text" maxlength="1" class="otp-digit" pattern="\d" inputmode="numeric" required>
-      <input type="text" maxlength="1" class="otp-digit" pattern="\d" inputmode="numeric" required>
-      <input type="text" maxlength="1" class="otp-digit" pattern="\d" inputmode="numeric" required>
-      <input type="text" maxlength="1" class="otp-digit" pattern="\d" inputmode="numeric" required>
-    </div>
-
-    <div id="otpError" class="error-msg">Invalid OTP code. Please try again.</div>
-
-    <button id="verifyOtpBtn" class="btn-gold">Confirm & Complete</button>
-    
-    <div>
-      <button id="resendBtn" class="resend-btn" disabled>Resend OTP in <span id="timer">30</span>s</button>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-bottom">© 2026 Nemblo. Currently serving West Bengal.</div>
-  </div>
-</footer>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-  // 1. Telegram WebApp Integration
-  if (window.Telegram && window.Telegram.WebApp) {
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-    tg.setHeaderColor("#340a0e");
-    tg.setBackgroundColor("#340a0e");
-  }
-
-  // 2. Element Selectors
-  const seekerRadio = document.getElementById("role-seeker");
-  const buddyRadio = document.getElementById("role-buddy");
-  const buddyFields = document.getElementById("buddyFields");
-  const signupForm = document.getElementById("signupForm");
-  const otpModal = document.getElementById("otpModal");
-  const targetPhoneDisplay = document.getElementById("targetPhone");
-  const otpDigits = document.querySelectorAll(".otp-digit");
-  const otpError = document.getElementById("otpError");
-  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
-  const resendBtn = document.getElementById("resendBtn");
-  const timerDisplay = document.getElementById("timer");
-
-  const urlParams = new URLSearchParams(window.location.search);
-  let plan = urlParams.get("plan") || "EMI Lite";
-  let amount = urlParams.get("amount") || "99";
-  let countdownTimer;
-  let simulatedOTP = "123456"; // System verification mock standard
-
-  // Toggle roles
-  function updateRoleView() {
-    if (buddyRadio.checked) {
-      buddyFields.classList.remove("hidden");
-    } else {
-      buddyFields.classList.add("hidden");
-    }
-  }
-
-  seekerRadio.addEventListener("change", updateRoleView);
-  buddyRadio.addEventListener("change", updateRoleView);
-
-  // Auto-focus transitions for OTP Inputs
-  otpDigits.forEach((digit, index) => {
-    digit.addEventListener("input", (e) => {
-      if (e.target.value.length === 1 && index < otpDigits.length - 1) {
-        otpDigits[index + 1].focus();
-      }
-    });
-
-    digit.addEventListener("keydown", (e) => {
-      if (e.key === "Backspace" && !e.target.value && index > 0) {
-        otpDigits[index - 1].focus();
-      }
-    });
-  });
-
-  // Handle Initial Form Submit (Trigger Modal)
-  signupForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const phoneVal = document.getElementById("phone").value.trim();
-    targetPhoneDisplay.textContent = phoneVal;
-    
-    // Reset OTP Modal State
-    otpDigits.forEach(input => input.value = '');
-    otpError.style.display = "none";
-    otpModal.classList.remove("hidden");
-    otpDigits[0].focus();
-
-    // Generate & Display OTP prompt
-    simulatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    alert(`[Nemblo Verification] Your OTP Code is: ${simulatedOTP}`);
-    
-    startResendTimer();
-  });
-
-  function startResendTimer() {
-    let timeLeft = 30;
-    resendBtn.disabled = true;
-    timerDisplay.textContent = timeLeft;
-    
-    clearInterval(countdownTimer);
-    countdownTimer = setInterval(() => {
-      timeLeft--;
-      timerDisplay.textContent = timeLeft;
-      if (timeLeft <= 0) {
-        clearInterval(countdownTimer);
-        resendBtn.disabled = false;
-        resendBtn.innerHTML = "Resend OTP";
-      }
-    }, 1000);
-  }
-
-  resendBtn.addEventListener("click", () => {
-    simulatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    alert(`[Nemblo Verification] Your new OTP Code is: ${simulatedOTP}`);
-    resendBtn.innerHTML = 'Resend OTP in <span id="timer">30</span>s';
-    startResendTimer();
-  });
-
-  // Strict Verification Step
-  verifyOtpBtn.addEventListener("click", () => {
-    let enteredOTP = "";
-    otpDigits.forEach(input => enteredOTP += input.value);
-
-    if (enteredOTP === simulatedOTP) {
-      // Complete Registration & Save Session
-      const selectedRole = document.querySelector('input[name="role"]:checked').value;
-      const userData = {
-        name: document.getElementById("name").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        city: document.getElementById("city").value,
-        role: selectedRole,
-        verified: true,
-        plan: plan,
-        amount: amount
-      };
-
-      if (selectedRole === "buddy") {
-        userData.rate = document.getElementById("rate").value;
-        userData.bio = document.getElementById("bio").value;
-      }
-
-      localStorage.setItem("nemblo_user", JSON.stringify(userData));
-
-      // Redirect execution path
-      if (selectedRole === "seeker") {
-        const targetParams = new URLSearchParams({ plan, amount });
-        window.location.href = `payment.html?${targetParams.toString()}`;
-      } else {
-        window.location.href = "dashboard.html";
-      }
-    } else {
-      otpError.style.display = "block";
-      otpDigits.forEach(input => input.value = '');
-      otpDigits[0].focus();
-    }
-  });
-</script>
-</body>
-</html>
-    letter-spacing:0.02em;
-  }
-
-  /* ---------- HEADER ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(52,10,14,0.92);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding-top:16px; padding-bottom:16px;
-    max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;
-  }
-  .navlinks{display:flex; gap:34px; font-size:0.95rem; font-weight:500;}
-  .navlinks a{opacity:0.82; transition:opacity 0.2s;}
-  .navlinks a:hover{opacity:1; color:var(--gold-light);}
-  @media (max-width:820px){ .navlinks{display:none;} }
-
-  /* ---------- BUTTONS ---------- */
-  .btn-gold{
-    background:linear-gradient(180deg, var(--gold-light), var(--gold));
-    color:var(--maroon-950); padding:13px 26px; border-radius:4px;
-    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:none; cursor:pointer;
-    box-shadow:0 8px 22px rgba(201,161,58,0.28);
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
-    display:inline-block;
-  }
-  .btn-gold:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(201,161,58,0.4);}
-  .btn-outline{
-    background:transparent; color:var(--ivory-2); padding:13px 26px; border-radius:4px;
-    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:1px solid var(--line-gold); cursor:pointer;
-    transition:border-color 0.2s ease, background 0.2s ease;
-    display:inline-block;
-  }
-  .btn-outline:hover{border-color:var(--gold); background:rgba(201,161,58,0.08);}
-
-  /* ---------- HERO ---------- */
-  .hero{
-    padding-top:88px; padding-bottom:70px;
-    text-align:center;
-  }
-  .hero-crest-row{display:flex; justify-content:center; margin-bottom:22px;}
-  .hero .eyebrow{margin-bottom:24px;}
-  .hero h1{
-    font-size:clamp(2.6rem, 5.4vw, 4.4rem);
-    color:var(--ivory-2);
-    margin-bottom:10px;
-  }
-  .hero h1 em{ font-style:italic; color:var(--gold-light); }
-  .hero .bangla-line{
-    font-family:'Hind Siliguri', sans-serif; font-size:1.15rem; color:var(--gold-light);
-    margin-bottom:22px; letter-spacing:0.01em;
-  }
-  .hero p.lede{
-    font-size:1.08rem; color:rgba(247,240,223,0.75); max-width:560px; margin:0 auto 36px;
-  }
-  .hero-ctas{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:50px;}
-  .hero-stats{
-    display:flex; gap:0; justify-content:center; font-family:'IBM Plex Mono';
-    border-top:1px solid var(--line-gold); border-bottom:1px solid var(--line-gold);
-    max-width:640px; margin:0 auto; padding:22px 0;
-  }
-  .hero-stats div{flex:1; border-left:1px solid var(--line); padding:0 10px;}
-  .hero-stats div:first-child{border-left:none;}
-  .hero-stats div strong{display:block; font-size:1.4rem; color:var(--gold-light);}
-  .hero-stats div span{font-size:0.7rem; color:rgba(247,240,223,0.55); text-transform:uppercase; letter-spacing:0.06em; font-family:'Hind Siliguri';}
-
-  /* ---------- SECTION HEAD ---------- */
-  .section-head{max-width:600px; margin:0 auto 50px; text-align:center;}
-  .section-head h2{font-size:clamp(1.9rem,3.2vw,2.5rem); color:var(--ivory-2); margin-top:16px;}
-  .section-head p{color:rgba(247,240,223,0.68); margin-top:14px; font-size:1.02rem;}
-
-  /* ---------- STEPS ---------- */
-  .steps{padding-top:50px; padding-bottom:30px;}
-  .step-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
-  @media (max-width:860px){ .step-grid{grid-template-columns:1fr;} }
-  .step-card{background:var(--maroon-950); padding:36px 30px;}
-  .step-card .num{font-family:'Cormorant Garamond'; font-style:italic; color:var(--gold); font-size:1.6rem; display:block; margin-bottom:14px;}
-  .step-card h3{font-size:1.35rem; color:var(--ivory-2); margin-bottom:10px;}
-  .step-card p{color:rgba(247,240,223,0.62); font-size:0.94rem;}
-
-  /* ---------- TRACKS ---------- */
-  .tracks{padding-top:50px; padding-bottom:70px;}
-  .track-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
-  @media (max-width:860px){ .track-grid{grid-template-columns:1fr;} }
-  .track{background:var(--maroon-900); padding:44px 38px; position:relative;}
-  .track .tag{font-family:'Cinzel'; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--gold);}
-  .track h3{font-size:1.7rem; color:var(--ivory-2); margin:14px 0 12px;}
-  .track p{color:rgba(247,240,223,0.68); margin-bottom:24px;}
-  .track ul{list-style:none; margin-bottom:28px;}
-  .track li{padding:10px 0; border-top:1px solid var(--line); color:rgba(247,240,223,0.78); font-size:0.94rem; display:flex; gap:10px;}
-  .track li::before{content:'—'; color:var(--gold); flex-shrink:0;}
-
-  /* ---------- PRICING ---------- */
-  .pricing{padding-top:50px; padding-bottom:70px;}
-  .price-note{
-    display:flex; align-items:center; gap:14px; margin:0 auto 44px; max-width:620px;
-    background:rgba(201,161,58,0.07); border:1px solid var(--line-gold);
-    padding:16px 22px; border-radius:2px;
-  }
-  .price-note .dot{width:8px; height:8px; border-radius:50%; background:var(--gold); flex-shrink:0;}
-  .price-note p{font-size:0.9rem; color:rgba(247,240,223,0.85);}
-  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch;}
-  @media (max-width:900px){ 
-    .price-grid{grid-template-columns:1fr;} 
-    .plan.featured{transform:none;}
-  }
-  .plan{
-    background:var(--maroon-900); border:1px solid var(--line-gold); padding:38px 32px;
-    display:flex; flex-direction:column; position:relative; margin-top:15px;
-  }
-  .plan.featured{
-    border-color:var(--gold); background:linear-gradient(165deg, var(--maroon-800), var(--maroon-900));
-    margin-top:0;
-    box-shadow:0 16px 40px rgba(0,0,0,0.4);
-  }
-  .plan-badge{
-    position:absolute; top:-13px; left:32px;
-    font-family:'Cinzel'; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.1em;
-    background:var(--gold); color:var(--maroon-950); padding:5px 14px; border-radius:2px;
-  }
-  .plan-name{font-family:'Cormorant Garamond'; font-size:1.5rem; color:var(--ivory-2); margin-bottom:8px;}
-  .plan-price{display:flex; align-items:baseline; gap:6px; margin-bottom:4px;}
-  .plan-price .num{font-family:'Cormorant Garamond'; font-size:2.7rem; color:var(--gold-light); font-weight:600;}
-  .plan-price .per{color:rgba(247,240,223,0.55); font-size:0.88rem;}
-  .plan-sub{color:rgba(247,240,223,0.5); font-size:0.85rem; margin-bottom:26px;}
-  .plan ul{list-style:none; margin-bottom:30px; flex-grow:1;}
-  .plan li{padding:8px 0; font-size:0.92rem; color:rgba(247,240,223,0.8); display:flex; gap:10px;}
-  .plan li::before{content:'✦'; color:var(--gold); font-weight:700; flex-shrink:0; font-size:0.75rem;}
-  .plan-cta{
-    text-align:center; padding:13px; border-radius:2px; font-weight:600; font-size:0.92rem;
-    background:transparent; border:1px solid var(--line-gold); transition:all 0.2s ease;
-    display:block; width:100%;
-  }
-  .plan.featured .plan-cta{background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--maroon-950); border-color:var(--gold);}
-  .plan-cta:hover{border-color:var(--gold); background:rgba(201,161,58,0.12);}
-  .plan.featured .plan-cta:hover{background:linear-gradient(180deg, #f3dfa2, var(--gold));}
-
-  /* ---------- TRUST & SAFETY ---------- */
-  .trust{padding-top:40px; padding-bottom:70px;}
-  .trust-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
-  @media (max-width:860px){ .trust-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:500px){ .trust-grid{grid-template-columns:1fr;} }
-  .trust-item{padding:28px 22px; background:var(--maroon-950);}
-  .trust-item .ico{font-size:1.3rem; margin-bottom:12px; color:var(--gold);}
-  .trust-item h4{font-size:1.15rem; color:var(--ivory-2); margin-bottom:6px;}
-  .trust-item p{font-size:0.84rem; color:rgba(247,240,223,0.58);}
-
-  /* ---------- FINAL CTA ---------- */
-  .final-cta{padding-top:50px; padding-bottom:90px; text-align:center;}
-  .final-cta h2{font-size:clamp(2rem,4vw,3rem); color:var(--ivory-2); max-width:640px; margin:0 auto 22px;}
-  .final-cta p{color:rgba(247,240,223,0.68); max-width:500px; margin:0 auto 34px; font-size:1.02rem;}
-  .final-ctas{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
-
-  /* ---------- FOOTER ---------- */
-  footer{border-top:1px solid var(--line); padding-top:44px; padding-bottom:28px;}
-  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:28px;}
-  .foot-links{display:flex; gap:26px; font-size:0.88rem; color:rgba(247,240,223,0.6); flex-wrap:wrap;}
-  .foot-links a:hover{color:var(--gold-light);}
-  .foot-bottom{font-size:0.78rem; color:rgba(247,240,223,0.4); font-family:'IBM Plex Mono';}
-</style>
-</head>
-<body>
-
-<header>
-  <nav>
-    <div class="brand"><div class="crest">ন</div>Nemblo</div>
-    <div class="navlinks">
-      <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#trust">Safety</a>
-    </div>
-    <a href="signup.html" class="btn-gold">Get started</a>
-  </nav>
-</header>
-
-<section class="hero wrap">
-  <div class="hero-crest-row">
-    <div class="crest" style="width:56px;height:56px;font-size:1.7rem;">ন</div>
-  </div>
-  <div class="eyebrow">Now welcoming West Bengal</div>
-  <h1>A companion worthy<br>of your <em>company.</em></h1>
-  <p class="bangla-line">আপনার সঙ্গী, আপনার শর্তে</p>
-  <p class="lede">Nemblo brings you verified companions for the gym, a trip to Digha, an adda over coffee, or an evening you don't want to spend alone — with the care of an introduction, not the awkwardness of an app.</p>
-  <div class="hero-ctas">
-    <a href="signup.html" class="btn-gold">Find a buddy</a>
-    <a href="signup.html" class="btn-outline">Become a buddy</a>
-  </div>
-  <div class="hero-stats">
-    <div><strong>Kolkata</strong><span>Howrah · Durgapur · Siliguri</span></div>
-    <div><strong>3,200+</strong><span>Verified buddies</span></div>
-    <div><strong>₹99</strong><span>Starting plan</span></div>
-  </div>
-</section>
-
-<div class="alpona-divider"></div>
-
-<section class="steps wrap" id="how">
-  <div class="section-head">
-    <div class="eyebrow">How Nemblo works</div>
-    <h2>Three steps to your first buddy</h2>
-    <p>No long forms, no guesswork — tell us the occasion, and we introduce you to someone who fits.</p>
-  </div>
-  <div class="step-grid">
-    <div class="step-card">
-      <span class="num">I.</span>
-      <h3>Pick your occasion</h3>
-      <p>Gym session, a weekend at Mandarmani, exam prep, a wedding you don't want to attend solo — tell us what's on the calendar.</p>
-    </div>
-    <div class="step-card">
-      <span class="num">II.</span>
-      <h3>Browse verified buddies</h3>
-      <p>Every profile is ID-checked before it goes live. See ratings, past meetups, and availability before you commit.</p>
-    </div>
-    <div class="step-card">
-      <span class="num">III.</span>
-      <h3>Meet, rate, return</h3>
-      <p>Confirm a time, meet in a public place, and leave a rating afterward so the next person knows what to expect.</p>
-    </div>
-  </div>
-</section>
-
-<section class="tracks wrap">
-  <div class="track-grid">
-    <div class="track">
-      <span class="tag">For seekers</span>
-      <h3>Looking for company?</h3>
-      <p>Browse buddies by occasion, city, and availability. Message first, meet when you're both ready.</p>
-      <ul>
-        <li>Unlimited browsing of verified profiles</li>
-        <li>Filter by occasion, city, and price</li>
-        <li>In-app chat before you meet</li>
-        <li>Rate and review after every meetup</li>
-      </ul>
-      <a href="signup.html" class="btn-outline">Sign up as a seeker</a>
-    </div>
-    <div class="track">
-      <span class="tag">For buddies</span>
-      <h3>Turn your time into income</h3>
-      <p>List yourself as a companion for the occasions you're genuinely good at, set your own availability, and get paid per meetup.</p>
-      <ul>
-        <li>Set your own hourly rate</li>
-        <li>Choose which occasions you offer</li>
-        <li>Accept or decline any request</li>
-        <li>Weekly payouts to your bank account</li>
-      </ul>
-      <a href="signup.html" class="btn-gold">Sign up as a buddy</a>
-    </div>
-  </div>
-</section>
-
-<div class="alpona-divider"></div>
-
-<section class="pricing wrap" id="pricing">
-  <div class="section-head">
-    <div class="eyebrow">Pricing</div>
-    <h2>One plan, three ways to pay</h2>
-    <p>Every plan unlocks the exact same features — unlimited matches, verified profiles, and in-app chat. Only the billing rhythm changes.</p>
-  </div>
-  <div class="price-note">
-    <div class="dot"></div>
-    <p>All three plans include identical access. There's no "basic" tier that holds features back.</p>
-  </div>
-  <div class="price-grid">
-    <div class="plan">
-      <div class="plan-name">Monthly</div>
-      <div class="plan-price"><span class="num mono">₹299</span><span class="per">/month</span></div>
-      <div class="plan-sub">Billed every month, cancel anytime</div>
-      <ul>
-        <li>Unlimited buddy matches</li>
-        <li>Verified profiles only</li>
-        <li>In-app chat</li>
-        <li>Priority support</li>
-      </ul>
-      <a href="signup.html?plan=Monthly&amount=299" class="plan-cta">Choose Monthly</a>
-    </div>
-    <div class="plan featured">
-      <div class="plan-badge">Most chosen</div>
-      <div class="plan-name">EMI Lite</div>
-      <div class="plan-price"><span class="num mono">₹99</span><span class="per">/month</span></div>
-      <div class="plan-sub">Same plan, split into small monthly payments</div>
-      <ul>
-        <li>Unlimited buddy matches</li>
-        <li>Verified profiles only</li>
-        <li>In-app chat</li>
-        <li>Priority support</li>
-      </ul>
-      <a href="signup.html?plan=EMI+Lite&amount=99" class="plan-cta">Start at ₹99</a>
-    </div>
-    <div class="plan">
-      <div class="plan-name">Annual</div>
-      <div class="plan-price"><span class="num mono">₹2,499</span><span class="per">/year</span></div>
-      <div class="plan-sub">Pay once, save across the year</div>
-      <ul>
-        <li>Unlimited buddy matches</li>
-        <li>Verified profiles only</li>
-        <li>In-app chat</li>
-        <li>Priority support</li>
-      </ul>
-      <a href="signup.html?plan=Annual&amount=2499" class="plan-cta">Choose Annual</a>
-    </div>
-  </div>
-</section>
-
-<section class="trust wrap" id="trust">
-  <div class="section-head">
-    <div class="eyebrow">Safety & Security</div>
-    <h2>Built with trust at the center</h2>
-    <p>Your safety and privacy are priority number one before, during, and after every meetup.</p>
-  </div>
-  <div class="trust-grid">
-    <div class="trust-item">
-      <div class="ico">🛡️</div>
-      <h4>ID Verification</h4>
-      <p>Every companion profile undergoes identity verification before approval.</p>
-    </div>
-    <div class="trust-item">
-      <div class="ico">🔒</div>
-      <h4>Private Messaging</h4>
-      <p>Chat securely within the app without sharing personal contact details.</p>
-    </div>
-    <div class="trust-item">
-      <div class="ico">⭐</div>
-      <h4>Review System</h4>
-      <p>Transparent community ratings ensure accountable behavior on all ends.</p>
-    </div>
-    <div class="trust-item">
-      <div class="ico">📍</div>
-      <h4>Public Meetups</h4>
-      <p>All first meetups are strongly encouraged to take place in public venues.</p>
-    </div>
-  </div>
-</section>
-
-<section class="final-cta wrap">
-  <h2>Ready to find your companion?</h2>
-  <p>Join thousands across West Bengal who are already making meaningful connections on their terms.</p>
-  <div class="final-ctas">
-    <a href="signup.html" class="btn-gold">Get started today</a>
-  </div>
-</section>
-
-<footer class="wrap">
-  <div class="foot-grid">
-    <div class="brand"><div class="crest">ন</div>Nemblo</div>
-    <div class="foot-links">
-      <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#trust">Safety</a>
-      <a href="signup.html">Sign Up</a>
-    </div>
-  </div>
-  <div class="foot-bottom">
-    &copy; 2026 Nemblo Technologies Inc. All rights reserved.
-  </div>
-</footer>
-
-</body>
-</html>
-
-  .plan-price .per{color:rgba(247,240,223,0.55); font-size:0.88rem;}
-  .plan-sub{color:rgba(247,240,223,0.5); font-size:0.85rem; margin-bottom:26px;}
-  .plan ul{list-style:none; margin-bottom:30px; flex-grow:1;}
-  .plan li{padding:8px 0; font-size:0.92rem; color:rgba(247,240,223,0.8); display:flex; gap:10px;}
-  .plan li::before{content:'✦'; color:var(--gold); font-weight:700; flex-shrink:0; font-size:0.75rem;}
-  .plan-cta{
-    text-align:center; padding:13px; border-radius:2px; font-weight:600; font-size:0.92rem;
-    background:transparent; border:1px solid var(--line-gold); transition:all 0.2s ease;
-  }
-  .plan.featured .plan-cta{background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--maroon-950); border-color:var(--gold);}
-  .plan-cta:hover{border-color:var(--gold);}
-
-  /* ---------- TRUST ---------- */
-  .trust{padding-top:20px; padding-bottom:100px;}
-  .trust-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
-  @media (max-width:860px){ .trust-grid{grid-template-columns:repeat(2,1fr);} }
-  .trust-item{padding:28px 22px; background:var(--maroon-950);}
-  .trust-item .ico{font-size:1.3rem; margin-bottom:12px; color:var(--gold);}
-  .trust-item h4{font-family:'Cormorant Garamond'; font-size:1.15rem; color:var(--ivory-2); margin-bottom:6px;}
-  .trust-item p{font-size:0.84rem; color:rgba(247,240,223,0.58);}
-
-  /* ---------- FINAL CTA ---------- */
-  .final-cta{padding-top:90px; padding-bottom:100px; text-align:center;}
-  .final-cta h2{font-size:clamp(2rem,4vw,3rem); color:var(--ivory-2); max-width:640px; margin:0 auto 22px;}
-  .final-cta p{color:rgba(247,240,223,0.68); max-width:500px; margin:0 auto 34px; font-size:1.02rem;}
-  .final-ctas{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
-</style>
-
-<header>
-  <nav>
-    <div class="brand"><div class="crest">ন</div>Nemblo</div>
-    <div class="navlinks">
-      <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#trust">Safety</a>
-    </div>
-    <a href="signup.html" class="btn-gold">Get started</a>
-  </nav>
-</header>
-
-<section class="hero wrap">
-  <div class="hero-crest-row">
-    <div class="crest" style="width:56px;height:56px;font-size:1.7rem;">ন</div>
-  </div>
-  <div class="eyebrow">Now welcoming West Bengal</div>
-  <h1>A companion worthy<br>of your <em>company.</em></h1>
-  <p class="bangla-line">আপনার সঙ্গী, আপনার শর্তে</p>
-  <p class="lede">Nemblo brings you verified companions for the gym, a trip to Digha, an adda over coffee, or an evening you don't want to spend alone — with the care of an introduction, not the awkwardness of an app.</p>
-  <div class="hero-ctas">
-    <a href="signup.html" class="btn-gold">Find a buddy</a>
-    <a href="signup.html" class="btn-outline">Become a buddy</a>
-  </div>
-  <div class="hero-stats">
-    <div><strong>Kolkata</strong><span>Howrah · Durgapur · Siliguri</span></div>
-    <div><strong>3,200+</strong><span>Verified buddies</span></div>
-    <div><strong>₹99</strong><span>Starting plan</span></div>
-  </div>
-</section>
-
-<div class="alpona-divider"></div>
-
-<section class="steps wrap" id="how">
-  <div class="section-head">
-    <div class="eyebrow">How Nemblo works</div>
-    <h2>Three steps to your first buddy</h2>
-    <p>No long forms, no guesswork — tell us the occasion, and we introduce you to someone who fits.</p>
-  </div>
-  <div class="step-grid">
-    <div class="step-card">
-      <span class="num">I.</span>
-      <h3>Pick your occasion</h3>
-      <p>Gym session, a weekend at Mandarmani, exam prep, a wedding you don't want to attend solo — tell us what's on the calendar.</p>
-    </div>
-    <div class="step-card">
-      <span class="num">II.</span>
-      <h3>Browse verified buddies</h3>
-      <p>Every profile is ID-checked before it goes live. See ratings, past meetups, and availability before you commit.</p>
-    </div>
-    <div class="step-card">
-      <span class="num">III.</span>
-      <h3>Meet, rate, return</h3>
-      <p>Confirm a time, meet in a public place, and leave a rating afterward so the next person knows what to expect.</p>
-    </div>
-  </div>
-</section>
-
-<section class="tracks wrap">
-  <div class="track-grid">
-    <div class="track">
-      <span class="tag">For seekers</span>
-      <h3>Looking for company?</h3>
-      <p>Browse buddies by occasion, city, and availability. Message first, meet when you're both ready.</p>
-      <ul>
-        <li>Unlimited browsing of verified profiles</li>
-        <li>Filter by occasion, city, and price</li>
-        <li>In-app chat before you meet</li>
-        <li>Rate and review after every meetup</li>
-      </ul>
-      <a href="signup.html" class="btn-outline">Sign up as a seeker</a>
-    </div>
-    <div class="track">
-      <span class="tag">For buddies</span>
-      <h3>Turn your time into income</h3>
-      <p>List yourself as a companion for the occasions you're genuinely good at, set your own availability, and get paid per meetup.</p>
-      <ul>
-        <li>Set your own hourly rate</li>
-        <li>Choose which occasions you offer</li>
-        <li>Accept or decline any request</li>
-        <li>Weekly payouts to your bank account</li>
-      </ul>
-      <a href="signup.html" class="btn-gold">Sign up as a buddy</a>
-    </div>
-  </div>
-</section>
-
-<div class="alpona-divider"></div>
-
-<section class="pricing wrap" id="pricing">
-  <div class="section-head">
-    <div class="eyebrow">Pricing</div>
-    <h2>One plan, three ways to pay</h2>
-    <p>Every plan unlocks the exact same features — unlimited matches, verified profiles, and in-app chat. Only the billing rhythm changes.</p>
-  </div>
-  <div class="price-note">
-    <div class="dot"></div>
-    <p>All three plans include identical access. There's no "basic" tier that holds features back.</p>
-  </div>
-  <div class="price-grid">
-    <div class="plan">
-      <div class="plan-name">Monthly</div>
-      <div class="plan-price"><span class="num mono">₹299</span><span class="per">/month</span></div>
-      <div class="plan-sub">Billed every month, cancel anytime</div>
-      <ul>
-        <li>Unlimited buddy matches</li>
-        <li>Verified profiles only</li>
-        <li>In-app chat</li>
-        <li>Priority support</li>
-      </ul>
-      <a href="signup.html" class="plan-cta">Choose Monthly</a>
-    </div>
-    <div class="plan featured">
-      <div class="plan-badge">Most chosen</div>
-      <div class="plan-name">EMI Lite</div>
-      <div class="plan-price"><span class="num mono">₹99</span><span class="per">/month</span></div>
-      <div class="plan-sub">Same plan, split into small monthly payments</div>
-      <ul>
-        <li>Unlimited buddy matches</li>
-        <li>Verified profiles only</li>
-        <li>In-app chat</li>
-        <li>Priority support</li>
-      </ul>
-      <a href="signup.html" class="plan-cta">Start at ₹99</a>
-    </div>
-    <div class="plan">
-      <div class="plan-name">Annual</div>
-      <div class="plan-price"><span class="num mono">₹2,499</span><span class="per">/year</span></div>
-      <div class="plan-sub">Pay once, save across the year</div>
-      <ul>
-        <li>Unlimited buddy matches</li>
-        <li>Verified profiles only</li>
-        <li>In-app chat</li>
-        <li>Priority support</li>
-      </ul>
-      <a href="signup.html" class="plan-cta">Choose Annual</a>
-    </div>
-  </div>
-</section>
-
-<section class="trust wrap" id="trust">
-  <div class="section-head">
-    <div class="eyebrow">Safety first</div>
-    <h2>Built for trust, not just matches</h2>
-  </div>
-  <div class="trust-grid">
-    <div class="trust-item"><div class="ico">🪪</div><h4>ID verification</h4><p>Every buddy submits government ID before going live on the platform.</p></div>
-    <div class="trust-item"><div class="ico">⭐</div><h4>Public ratings</h4><p>Every meetup can be rated — good and bad history stays visible.</p></div>
-    <div class="trust-item"><div class="ico">📍</div><h4>Public meetups</h4><p>We recommend and default to public locations for first meetings.</p></div>
-    <div class="trust-item"><div class="ico">🚩</div><h4>Report & block</h4><p>One-tap reporting with a real human review team behind it.</p></div>
-  </div>
-</section>
-
-<div class="alpona-divider"></div>
-
-<section class="final-cta wrap">
-  <h2>Your next buddy is one tap away.</h2>
-  <p>Join for as little as ₹99 a month and start browsing verified companions across West Bengal today.</p>
-  <div class="final-ctas">
-    <a href="signup.html" class="btn-gold">Find a buddy</a>
-    <a href="signup.html" class="btn-outline">Become a buddy</a>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="brand" style="font-size:1.25rem;"><div class="crest" style="width:32px;height:32px;font-size:1.05rem;">ন</div>Nemblo</div>
-      <div class="foot-links">
-        <a href="#">About</a>
-        <a href="#">Safety</a>
-        <a href="#">Terms</a>
-        <a href="#">Privacy</a>
-        <a href="#">Contact</a>
-      </div>
-    </div>
-    <div class="foot-bottom">© 2026 Nemblo. Currently serving West Bengal.</div>
-  </div>
-</footer>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-  if (window.Telegram && window.Telegram.WebApp) {
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-    tg.setHeaderColor("#340a0e");
-    tg.setBackgroundColor("#340a0e");
-  }
-</script>
-</body></html>
-  .btn-outline{
-    background:transparent; color:var(--ivory-2); padding:13px 26px; border-radius:4px;
-    font-weight:600; font-size:0.92rem; letter-spacing:0.03em; border:1px solid var(--line-gold); cursor:pointer;
-    transition:border-color 0.2s ease, background 0.2s ease;
-    display:inline-block;
-  }
-  .btn-outline:hover{border-color:var(--gold); background:rgba(201,161,58,0.08);}
-
-  footer{border-top:1px solid var(--line); padding-top:44px; padding-bottom:28px;}
-  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:28px;}
-  .foot-links{display:flex; gap:26px; font-size:0.88rem; color:rgba(247,240,223,0.6); flex-wrap:wrap;}
-  .foot-links a:hover{color:var(--gold-light);}
-  .foot-bottom{font-size:0.78rem; color:rgba(247,240,223,0.4); font-family:'IBM Plex Mono';}
-</style>
-</head><body>
-<style>
-  /* ---------- HERO ---------- */
-  .hero{
-    padding-top:88px; padding-bottom:70px;
-    text-align:center;
-  }
-  .hero-crest-row{display:flex; justify-content:center; margin-bottom:22px;}
-  .hero .eyebrow{margin-bottom:24px;}
-  .hero h1{
-    font-size:clamp(2.6rem, 5.4vw, 4.4rem);
-    color:var(--ivory-2);
-    margin-bottom:10px;
-  }
-  .hero h1 em{ font-style:italic; color:var(--gold-light); }
-  .hero .bangla-line{
-    font-family:'Hind Siliguri', sans-serif; font-size:1.15rem; color:var(--gold-light);
-    margin-bottom:22px; letter-spacing:0.01em;
-  }
-  .hero p.lede{
-    font-size:1.08rem; color:rgba(247,240,223,0.75); max-width:560px; margin:0 auto 36px;
-  }
-  .hero-ctas{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:50px;}
-  .hero-stats{
-    display:flex; gap:0; justify-content:center; font-family:'IBM Plex Mono';
-    border-top:1px solid var(--line-gold); border-bottom:1px solid var(--line-gold);
-    max-width:640px; margin:0 auto; padding:22px 0;
-  }
-  .hero-stats div{flex:1; border-left:1px solid var(--line);}
-  .hero-stats div:first-child{border-left:none;}
-  .hero-stats div strong{display:block; font-size:1.4rem; color:var(--gold-light);}
-  .hero-stats div span{font-size:0.7rem; color:rgba(247,240,223,0.55); text-transform:uppercase; letter-spacing:0.06em; font-family:'Hind Siliguri';}
-
-  /* ---------- SECTION HEAD ---------- */
-  .section-head{max-width:600px; margin:0 auto 50px; text-align:center;}
-  .section-head h2{font-size:clamp(1.9rem,3.2vw,2.5rem); color:var(--ivory-2); margin-top:16px;}
-  .section-head p{color:rgba(247,240,223,0.68); margin-top:14px; font-size:1.02rem;}
-
-  /* ---------- STEPS ---------- */
-  .steps{padding-top:90px; padding-bottom:30px;}
-  .step-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
-  @media (max-width:860px){ .step-grid{grid-template-columns:1fr;} }
-  .step-card{background:var(--maroon-950); padding:36px 30px;}
-  .step-card .num{font-family:'Cormorant Garamond'; font-style:italic; color:var(--gold); font-size:1.6rem; display:block; margin-bottom:14px;}
-  .step-card h3{font-size:1.35rem; color:var(--ivory-2); margin-bottom:10px;}
-  .step-card p{color:rgba(247,240,223,0.62); font-size:0.94rem;}
-
-  /* ---------- TRACKS ---------- */
-  .tracks{padding-top:70px; padding-bottom:90px;}
-  .track-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
-  @media (max-width:860px){ .track-grid{grid-template-columns:1fr;} }
-  .track{background:var(--maroon-900); padding:44px 38px; position:relative;}
-  .track .tag{font-family:'Cinzel'; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--gold);}
-  .track h3{font-size:1.7rem; color:var(--ivory-2); margin:14px 0 12px;}
-  .track p{color:rgba(247,240,223,0.68); margin-bottom:24px;}
-  .track ul{list-style:none; margin-bottom:28px;}
-  .track li{padding:10px 0; border-top:1px solid var(--line); color:rgba(247,240,223,0.78); font-size:0.94rem; display:flex; gap:10px;}
-  .track li::before{content:'—'; color:var(--gold); flex-shrink:0;}
-
-  /* ---------- PRICING ---------- */
-  .pricing{padding-top:70px; padding-bottom:100px;}
-  .price-note{
-    display:flex; align-items:center; gap:14px; margin:0 auto 44px; max-width:620px;
-    background:rgba(201,161,58,0.07); border:1px solid var(--line-gold);
-    padding:16px 22px; border-radius:2px;
-  }
-  .price-note .dot{width:8px; height:8px; border-radius:50%; background:var(--gold); flex-shrink:0;}
-  .price-note p{font-size:0.9rem; color:rgba(247,240,223,0.85);}
-  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  @media (max-width:900px){ .price-grid{grid-template-columns:1fr;} }
-  .plan{
-    background:var(--maroon-900); border:1px solid var(--line-gold); padding:38px 32px;
-    display:flex; flex-direction:column; position:relative;
-  }
-  .plan.featured{
-    border-color:var(--gold); background:linear-gradient(165deg, var(--maroon-800), var(--maroon-900));
-    transform:translateY(-10px);
-    box-shadow:0 24px 50px rgba(0,0,0,0.4);
-  }
-  .plan-badge{
-    position:absolute; top:-13px; left:32px;
-    font-family:'Cinzel'; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.1em;
-    background:var(--gold); color:var(--maroon-950); padding:5px 14px; border-radius:2px;
-  }
-  .plan-name{font-family:'Cormorant Garamond'; font-size:1.5rem; color:var(--ivory-2); margin-bottom:8px;}
-  .plan-price{display:flex; align-items:baseline; gap:6px; margin-bottom:4px;}
-  .plan-price .num{font-family:'Cormorant Garamond'; font-size:2.7rem; color:var(--gold-light); font-weight:600;}
-  .plan-price .per{color:rgba(247,240,223,0.55); font-size:0.88rem;}
-  .plan-sub{color:rgba(247,240,223,0.5); font-size:0.85rem; margin-bottom:26px;}
-  .plan ul{list-style:none; margin-bottom:30px; flex-grow:1;}
-  .plan li{padding:8px 0; font-size:0.92rem; color:rgba(247,240,223,0.8); display:flex; gap:10px;}
-  .plan li::before{content:'✦'; color:var(--gold); font-weight:700; flex-shrink:0; font-size:0.75rem;}
-  .plan-cta{
-    text-align:center; padding:13px; border-radius:2px; font-weight:600; font-size:0.92rem;
-    background:transparent; border:1px solid var(--line-gold); transition:all 0.2s ease;
-  }
-  .plan.featured .plan-cta{background:linear-gradient(180deg, var(--gold-light), var(--gold)); color:var(--maroon-950); border-color:var(--gold);}
-  .plan-cta:hover{border-color:var(--gold);}
-
-  /* ---------- TRUST ---------- */
-  .trust{padding-top:20px; padding-bottom:100px;}
-  .trust-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-gold); border:1px solid var(--line-gold);}
-  @media (max-width:860px){ .trust-grid{grid-template-columns:repeat(2,1fr);} }
-  .trust-item{padding:28px 22px; background:var(--maroon-950);}
-  .trust-item .ico{font-size:1.3rem; margin-bottom:12px; color:var(--gold);}
-  .trust-item h4{font-family:'Cormorant Garamond'; font-size:1.15rem; color:var(--ivory-2); margin-bottom:6px;}
-  .trust-item p{font-size:0.84rem; color:rgba(247,240,223,0.58);}
-
-  /* ---------- FINAL CTA ---------- */
-  .final-cta{padding-top:90px; padding-bottom:100px; text-align:center;}
-  .final-cta h2{font-size:clamp(2rem,4vw,3rem); color:var(--ivory-2); max-width:640px; margin:0 auto 22px;}
-  .final-cta p{color:rgba(247,240,223,0.68); max-width:500px; margin:0 auto 34px; font-size:1.02rem;}
-  .final-ctas{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
-</style>
-
-<header>
-  <nav>
-    <div class="brand"><div class="crest">ন</div>Nemblo</div>
     <div class="navlinks">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
